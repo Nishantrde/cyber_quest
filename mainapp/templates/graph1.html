@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph of Team Scores</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/graph1.css' %}">
+    
+</head>
+<body>
+
+    <h1 id="heading">LEADER BOARD</h1>
+
+    <div class="frequency_Chart">
+        <canvas id="frequencyChart"></canvas>
+    </div>
+
+    <script>
+        // Play heading animation on page reload
+        window.addEventListener('load', function() {
+            var heading = document.getElementById('heading');
+            heading.style.animation = 'headingAnim 2s forwards';
+        });
+
+        var ctx = document.getElementById('frequencyChart').getContext('2d');
+        var categories = {{ categories|safe }};
+        var frequencies = {{ frequencies|safe }};
+        var maxFrequency = Math.max(...frequencies);
+        
+        var frequencyChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: categories,
+                datasets: [{
+                    label: 'Score',
+                    data: frequencies,
+                    backgroundColor: 'rgba(255, 59, 63, 0.5)',
+                    borderColor: 'rgba(255, 59, 63, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        ticks: { color: '#FFFFFF' },
+                        grid: { color: 'rgba(255, 59, 63, 0.2)' }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        max: maxFrequency + 10, // Add buffer space above the highest value
+                        ticks: { color: '#FFFFFF' },
+                        grid: { color: 'rgba(255, 59, 63, 0.2)' }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#FFFFFF'
+                        }
+                    },
+                    tooltip: {
+                        enabled: true
+                    },
+                    datalabels: {
+                        color: '#FFFFFF',  // Data label color
+                        anchor: 'end',  // Position the data label at the end of the bar
+                        align: 'top',   // Align the label at the top of the bar
+                        formatter: function(value, context) {
+                            return context.chart.data.labels[context.dataIndex] + ': ' + value;
+                        },
+                        font: {
+                            weight: 'bold',
+                            size: 14
+                        },
+                        offset: 4 // Adjust label position to add buffer space
+                    }
+                }
+            },
+            plugins: [ChartDataLabels]
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lobby</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #000000, #1a1a1a); /* Gradient background */
+            color: #fff; /* Set text color to white */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #ff3b3b; /* Vibrant red for heading */
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(255, 0, 0, 0.5); /* Glowing red shadow */
+        }
+
+        #form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px; /* Gap between buttons */
+            margin-bottom: 30px;
+            width: 100%; /* Full width for consistent alignment */
+            max-width: 400px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #ff0000, #cc0000); /* Red gradient */
+            color: white;
+            cursor: pointer;
+            box-shadow: 0px 5px 15px rgba(255, 0, 0, 0.4); /* Red shadow under button */
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #e60000, #b30000); /* Darker red on hover */
+            transform: translateY(-3px); /* Lift the button on hover */
+            box-shadow: 0px 10px 20px rgba(255, 0, 0, 0.6); /* Larger shadow on hover */
+        }
+
+        #messages {
+            width: 350px;
+            max-height: 350px;
+            overflow-y: auto;
+            background-color: #222; /* Dark background for messages */
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Deep shadow around the box */
+        }
+
+        #messages div {
+            background-color: #444; /* Darker gray for each message */
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 10px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow for messages */
+        }
+
+        p {
+            margin: 0;
+            color: #f1f1f1; /* Slightly off-white for readability */
+        }
+
+        /* Scrollbar styling for messages */
+        #messages::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        #messages::-webkit-scrollbar-thumb {
+            background: #ff3b3b; /* Red color for scrollbar thumb */
+            border-radius: 5px;
+        }
+
+        #messages::-webkit-scrollbar-track {
+            background: #333;
+        }
+    </style>
+</head>
+<body>
+
+
+    <form id="form">
+        <button type="button" onclick="sendMessage(1)">A. Option 1</button>
+        <button type="button" onclick="sendMessage(2)">B. Option 2</button>
+        <button type="button" onclick="sendMessage(3)">C. Option 3</button>
+        <button type="button" onclick="sendMessage(4)">D. Option 4</button>
+    </form>
+
+    <div id="messages"></div>
+
+    <script type="text/javascript">
+        let url = `ws://${window.location.host}/ws/socket-server/`
+
+        const chatSocket = new WebSocket(url)
+
+        chatSocket.onmessage = function(e){
+            let data = JSON.parse(e.data)
+            console.log('Data:', data)
+
+            if(data.type === 'chat'){
+                let messages = document.getElementById('messages')
+
+                messages.insertAdjacentHTML('beforeend', `<div>
+                                        <p>${data.message}</p>
+                                    </div>`)
+            }
+        }
+
+        function sendMessage(option) {
+            let message;
+            switch (option) {
+                case 1:
+                    message = "A. Option 1";
+                    break;
+                case 2:
+                    message = "B. Option 2";
+                    break;
+                case 3:
+                    message = "C. Option 3";
+                    break;
+                case 4:
+                    message = "D. Option 4";
+                    break;
+                default:
+                    message = "Unknown option";
+            }
+
+            chatSocket.send(JSON.stringify({
+                'message': message
+            }));
+        }
+
+    </script>
+</body>
+</html>

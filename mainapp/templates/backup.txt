@@ -1,0 +1,9 @@
+ <!-- <div id="line"></div>
+            <img src="{% static 'img/team_avengers.png' %}" alt="" id="avenger1">
+        <div id="line"></div>
+
+    
+    <img src="{% static 'img/iron_rocket.jpg' %}" alt="" id="iron_rocket">
+    
+    
+    <img src="{% static 'img/iron_blast.jpg' %}" alt="" id="iron_blast"> -->

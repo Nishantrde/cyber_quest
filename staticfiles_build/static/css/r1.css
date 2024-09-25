@@ -1,0 +1,54 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0d0c0c, #1a1a1a);
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    background: linear-gradient(135deg, #33110c, #0e0907);
+    color: rgb(217, 255, 1);
+    padding: 20px 50px;
+    font-size: 4em;
+    border: 5px solid #130805;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    transition: opacity 1s ease-in-out; /* Added transition for fading */
+    position: relative;
+    z-index: 1;
+}
+
+#kasual {
+    width: 700px;
+    height: auto;
+    border: 8px solid #fff;
+    border-radius: 15px;
+    box-shadow: 0 6px 25px rgba(255, 255, 255, 0.5);
+    transition: transform 0.4s ease, box-shadow 0.4s ease, opacity 1s ease-in-out; /* Added opacity transition */
+}
+
+#line {
+    width: 100%;
+    height: 4px;
+    background: #d9ff01;
+    margin: 20px 0;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.5);
+}
+
+/* Fading out */
+.fade-out {
+    opacity: 0;
+}
