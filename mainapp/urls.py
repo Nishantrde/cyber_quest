@@ -6,7 +6,7 @@ urlpatterns = [
     path("r1_rules", r1_rules),
     path("teams", display_teams),
     path("r1", r1),
-    path("r1_quest_rxw", r1_quest),
+    path("r1_quest", r1_quest),
 
     path("graph1", graph1),
     path("ws",ws),
