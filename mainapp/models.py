@@ -17,7 +17,8 @@ class Quest_round1(models.Model):
     def __str__(self):
         return f"{self.quest}"
 
-class Quest_Round2(models.Model):
+class Quest_round2(models.Model):
+    qes_id = models.IntegerField(default=0)
     quest = models.CharField(max_length=255)
     ans = models.IntegerField(default=10)
     option1 = models.CharField(max_length=100)

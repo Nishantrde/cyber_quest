@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Quest_round1 as qr
+from .models import Quest_round2 as qr2
 from .models import Team as tm
+
 
 
 def index(request):
@@ -33,14 +35,12 @@ def r1_quest(request):
         bnt = "qes"
         ans = "qes"
         pas_s = False
-        spects = False
     
     if request.method == "POST":
         i = int(request.POST.get("counter"))
         j = int(request.POST.get("team_counter"))
         k = int(request.POST.get("pass_counter"))
         pas_s = False
-        spects = False
 
         bnt = request.POST.get("bnt")
         print(request.POST.get("wrong"), request.POST.get("ans"), bnt)
@@ -152,3 +152,13 @@ def graph1(request):
         "frequencies": frequencies,
         "teams": teams
     })
+
+
+def r2(request):
+    return render(request, "r2.html")
+
+def r2_quest(request):
+    obj = qr2.objects.all()
+    print(obj)
+    return render(request, "r2_quest.html")
+
