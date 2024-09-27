@@ -129,7 +129,7 @@ def r1_quest(request):
 
     return render(request, 'r1_quest.html', {
         "quest": quest,
-        "teams": list(tm.objects.all().order_by('score'))[::-1][:-1],
+        "teams": list(tm.objects.all().order_by('score'))[::-1],
         "team": team, 
         "bnt": bnt, 
         "team_counter": j,
