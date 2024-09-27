@@ -107,7 +107,7 @@ h1 {
 
 .leader-board h2 {
     margin: 0 0 15px 0;
-    font-size: 24px;
+    font-size: 30px;
     color: #FFD700;
     text-align: center;
     text-shadow: 0px 0px 10px #FFD700;
@@ -120,10 +120,10 @@ h1 {
     justify-content: space-between;
     align-items: center;
     width: 100%; /* Set the width to match the leaderboard */
-    margin: 5px 0;
+    margin: 2px 0;
     padding: 10px;
     color: #FFFFFF;
-    font-size: 18px;
+    font-size: 27px;
     background: linear-gradient(45deg, #f44336, #0f0f0f);
     border-radius: 8px;
     transition: transform 0.3s ease, background 0.3s ease;
@@ -161,7 +161,7 @@ h1 {
 
 .team h1 {
     font-family: 'Poppins', sans-serif; /* Use a modern font */
-    font-size: 32px; /* Increase font size */
+    font-size: 36px; /* Increase font size */
     color: #ffffff; /* Text color */
     margin: 0; /* Remove default margin */
     background: linear-gradient(135deg, #f44336, #ca2323); /* Text gradient */
