@@ -10,6 +10,7 @@ body {
     margin: 0;
 }
 
+/* Team Container Styles */
 .team-container {
     display: flex;
     justify-content: flex-end; /* Aligns the team name to the right */
@@ -33,6 +34,7 @@ body {
     text-align: center;
 }
 
+/* Question Styles */
 h1 {
     color: #fff;
     font-size: 100px;
@@ -45,20 +47,37 @@ h1 {
     margin-bottom: 5px;
 }
 
+/* Status Bar - Top Left Corner */
 .status-bar {
+    position: fixed; /* Keeps the status bar in a fixed position */
+    top: 20px; /* Distance from the top of the viewport */
+    left: 20px; /* Distance from the left of the viewport */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
+    background-color: rgba(0, 0, 0, 0.8); /* Slightly transparent background */
+    padding: 10px 15px;
+    border-radius: 10px;
+    z-index: 200; /* Ensures the status bar is above other elements */
+    box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.5); /* Shadow for depth */
 }
 
+.question-counter {
+    color: #c0c0c0;
+    font-size: 14px;
+}
+
+/* Progress Bar - Below Status Bar */
 .progress-bar {
+    position: fixed; /* Keeps the progress bar in a fixed position */
+    top: 70px; /* Distance from the top of the viewport */
+    left: 20px; /* Aligns with the status bar */
     height: 5px;
     background-color: #383838;
     border-radius: 5px;
     overflow: hidden;
-    width: 100%;
-    position: relative;
+    width: 200px; /* Adjust the width as needed */
+    z-index: 200; /* Ensures the progress bar is above other elements */
 }
 
 .progress {
@@ -68,23 +87,91 @@ h1 {
     transition: width 1s linear;
 }
 
-.time {
-    color: #c0c0c0;
-    font-size: 14px;
+/* Leaderboard Styling */
+.leader-board {
+    position: fixed;
+    top: 80px; /* Adjusted to move below the navbar */
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.5);
+    color: #FFFFFF;
+    width: 300px; /* Set a fixed width */
+    z-index: 100;
 }
 
-.question-counter {
-    color: #c0c0c0;
-    font-size: 14px;
+.leader-board h2 {
+    margin: 0 0 15px 0;
+    font-size: 24px;
+    color: #FFD700;
+    text-align: center;
+    text-shadow: 0px 0px 10px #FFD700;
+    border-bottom: 2px solid #FFD700; /* Bottom border for separation */
+    padding-bottom: 10px;
 }
 
-.response-message {
-    font-size: 22px;
-    font-weight: 700;
-    color: #e74c3c;
-    margin-top: 20px;
+.team-score {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Set the width to match the leaderboard */
+    margin: 5px 0;
+    padding: 10px;
+    color: #FFFFFF;
+    font-size: 18px;
+    background: linear-gradient(45deg, #f44336, #0f0f0f);
+    border-radius: 8px;
+    transition: transform 0.3s ease, background 0.3s ease;
+    cursor: pointer; /* Change cursor to indicate interactivity */
 }
 
+.team-score:hover {
+    transform: scale(1.05);
+    background: linear-gradient(45deg, #ff6347, #1c1c1c); /* Slightly brighter gradient on hover */
+}
+
+.team-name {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.team-score span {
+    font-weight: 500;
+}
+
+/* Team Container Styles */
+.team {
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Center the content vertically */
+    background: #1c1e24; /* Background gradient */
+    padding: 20px 40px; /* Spacing inside the container */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5); /* Box shadow for depth */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+    margin-bottom: 20px; /* Space below the container */
+    width: fit-content; /* Adjust width to content */
+    cursor: pointer; /* Change cursor on hover */
+}
+
+.team h1 {
+    font-family: 'Poppins', sans-serif; /* Use a modern font */
+    font-size: 32px; /* Increase font size */
+    color: #ffffff; /* Text color */
+    margin: 0; /* Remove default margin */
+    background: linear-gradient(135deg, #f44336, #ca2323); /* Text gradient */
+    -webkit-background-clip: text; /* Clip gradient to text */
+    -webkit-text-fill-color: transparent; /* Make text fill transparent to show gradient */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for 3D effect */
+    letter-spacing: 1px; /* Spacing between letters */
+    animation: glow 1.5s infinite alternate; /* Glow effect animation */
+}
+
+/* Option Button Styles */
 .option-button {
     background-color: #b71c1c;
     border: none;
@@ -102,4 +189,12 @@ h1 {
 
 .option-button:hover {
     background-color: #f44336;
+}
+
+/* Response Message Styles */
+.response-message {
+    font-size: 22px;
+    font-weight: 700;
+    color: #e74c3c;
+    margin-top: 20px;
 }
