@@ -7,16 +7,14 @@
     <title>Styled Quiz</title>
     <script src="https://cdn.tailwindcss.com"></script>
     {% load static %}
-    
     <link rel="stylesheet" href="{% static 'css/r1_quest.css' %}">
-    
 </head>
 
 <body>
     <!-- Team name outside, just above quiz-container -->
     <div class="team-container">
         <div class="team">
-            <h1>{{ team }}</h1>
+            <h1>{{ team.team_name }}</h1>
         </div>
     </div>
 
@@ -24,25 +22,39 @@
         <form method="post">
             {% csrf_token %}
             <div class="question-text">
-                
-                {% if bnt == "qes" %}
-                <h1>{{ quest }}</h1>
-                {% else %}
-                {% if ans %}
-                <h1>{{ quest }}</h1>
-                <div class="response-message">Right</div>
-                <div class="question-text">{{ quest.ans }}</div>
-                {% else %}
-                <h1>{{ quest }}</h1>
-                <div class="response-message">Wrong</div>
-                <input type="hidden" name="wrong" value="wrong">
-                {% endif %}
-                
-                {% endif %}
+                <h2>{{ quest.quest }}</h2>
+            </div>
+
+            <!-- KBC Style Options Table -->
+            <div class="options">
+                <table class="options-table">
+                    <tr>
+                        <td>
+                            <label for="option1" class="option-button">A. {{ quest.option1 }}</label>
+                        </td>
+                        <td>
+                            <label for="option2" class="option-button">B. {{ quest.option2 }}</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="option3" class="option-button">C. {{ quest.option3 }}</label>
+                        </td>
+                        <td>
+                            <label for="option4" class="option-button">D. {{ quest.option4 }}</label>
+                        </td>
+                    </tr>
+                </table>
             </div>
 
             <!-- Hidden inputs to store values -->
-            <button type="hidden" name="bnt" id="bnt" value="{{ bnt }}"></button>
+            <input type="hidden" name="counter" value="{{ counter }}">
+            <input type="hidden" name="pass_counter" value="{{ pass_counter }}">
+            <input type="hidden" name="team_counter" value="{{ team_counter }}">
+            <input type="hidden" name="bnt" value="{{ bnt }}">
+
+            <!-- Submit button -->
+            
 
             <div class="status-bar">
                 <div class="question-counter">Question {{ d_counter }} of {{ count }}</div>
@@ -51,52 +63,26 @@
             <div class="progress-bar">
                 <div class="progress" id="progress"></div>
             </div>
-            <input type="hidden" name="counter" value="{{ counter }}">
-            <input type="hidden" name="pass_counter" value="{{ pass_counter }}">
-            <input type="hidden" name="team_counter" value="{{ team_counter }}">
-            <input type="hidden" name="ans" id="ans" value="">
         </form>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-    document.addEventListener('keydown', function (event) {
-        const ansInput = document.getElementById('ans');
-        const submitButton = document.getElementById('bnt');
+            // Fix progress bar calculation and animation
+            const progressBar = document.getElementById('progress');
+            const totalQuestions = parseInt('{{ count }}', 10);  // Total number of questions in the quiz
+            const currentQuestion = parseInt('{{ d_counter }}', 10); // Current question number
 
-        // If 'y' is pressed, set the answer to 'y' and submit the form
-        if (event.key === 'y') {
-            ansInput.value = 'y';
-            if (submitButton) {
-                submitButton.click();
+            if (totalQuestions > 0 && currentQuestion > 0) {
+                // Ensure progress is calculated properly
+                const progressPercent = (currentQuestion / totalQuestions) * 100;
+
+                // Apply progress only if calculated percentage is valid
+                if (progressPercent <= 100 && progressPercent >= 0) {
+                    progressBar.style.width = progressPercent + '%';
+                }
             }
-        }
-
-        // If 'n' is pressed, set the answer to 'n' and submit the form
-        if (event.key === 'n') {
-            ansInput.value = 'n';
-            if (submitButton) {
-                submitButton.click();
-            }
-        }
-    });
-
-    // Fix progress bar calculation and animation
-    const progressBar = document.getElementById('progress');
-    const totalQuestions = parseInt('{{ count }}', 10);  // Total number of questions in the quiz
-    const currentQuestion = parseInt('{{ d_counter }}', 10); // Current question number
-
-    if (totalQuestions > 0 && currentQuestion > 0) {
-        // Ensure progress is calculated properly
-        const progressPercent = (currentQuestion / totalQuestions) * 100;
-
-        // Apply progress only if calculated percentage is valid
-        if (progressPercent <= 100 && progressPercent >= 0) {
-            progressBar.style.width = progressPercent + '%';
-        }
-    }
-});
-
+        });
     </script>
 </body>
 

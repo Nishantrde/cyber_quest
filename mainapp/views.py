@@ -17,6 +17,14 @@ def r1_rules(request):
 def r1(request):
     return render(request, "r1.html")
 
+
+def r2_quest(request):
+    teams = list(tm.objects.all().order_by('id'))[:-1]
+    quests = list(qr2.objects.all().order_by('qes_id'))
+    
+    return render(request, "r2_quest.html",{"team":teams[0], "quest":quests[0]})
+
+
 def r1_quest(request):
     # Sort teams by their ID
     teams = list(tm.objects.all().order_by('id'))[:-1]
@@ -120,7 +128,8 @@ def r1_quest(request):
             return redirect("/graph1")
 
     return render(request, 'r1_quest.html', {
-        "quest": quest, 
+        "quest": quest,
+        "teams": list(tm.objects.all().order_by('score'))[::-1][:-1],
         "team": team, 
         "bnt": bnt, 
         "team_counter": j,
@@ -157,8 +166,4 @@ def graph1(request):
 def r2(request):
     return render(request, "r2.html")
 
-def r2_quest(request):
-    obj = qr2.objects.all()
-    print(obj)
-    return render(request, "r2_quest.html")
 

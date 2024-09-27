@@ -14,6 +14,15 @@
 
 <body>
     <!-- Team name outside, just above quiz-container -->
+     <div class="leader-board">
+        <h2>LEADER BOARD</h2>
+        {% for team in teams %}
+            <div class="team-score">
+                <span class="team-name">{{ team }}</span>
+                <span class="team-score">{{ team.score }}</span>
+            </div>
+        {% endfor %}
+    </div>
     <div class="team-container">
         <div class="team">
             <h1>{{ team }}</h1>
