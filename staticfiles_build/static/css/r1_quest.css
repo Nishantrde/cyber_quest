@@ -28,7 +28,7 @@ body {
 .team-container {
     display: flex;
     justify-content: flex-end; /* Aligns the team name to the right */
-    width: 500px;
+    width: 830px;
     margin-bottom: 10px; /* Spacing between team name and quiz container */
 }
 
@@ -39,10 +39,10 @@ body {
 }
 
 .quiz-container {
-    background-color: #1c1e24;
+    background-color: #1c1e2496;
     padding: 20px;
     border-radius: 12px;
-    width: 500px;
+    width: 830px;
     max-width: 100%;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -55,8 +55,37 @@ h1 {
     margin-bottom: 25px;
 }
 
+
+#heading {
+    position: fixed; /* Keep the heading at the top */
+    top: 20px; /* Distance from the top of the viewport */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust to the exact center */
+    color: #fc0202;
+    font-size: 40px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 20px 50px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Text shadow */
+    z-index: 300; /* Ensure the heading is above other elements */
+}
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 .question-text {
-    font-size: 30px;
+    font-size: 50px;
     font-weight: 500;
     margin-bottom: 5px;
 }
@@ -69,7 +98,7 @@ h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.8); /* Slightly transparent background */
+    background-color: rgba(0, 0, 0, 0.496); /* Slightly transparent background */
     padding: 10px 15px;
     border-radius: 10px;
     z-index: 200; /* Ensures the status bar is above other elements */
@@ -87,7 +116,7 @@ h1 {
     top: 110px; /* Increased distance from the top of the viewport for more gap */
     left: 20px; /* Aligns with the status bar */
     height: 10px; /* Increased height for a thicker progress bar */
-    background-color: #383838;
+    background-color: #38383886;
     border-radius: 8px;
     overflow: hidden;
     width: 300px; /* Increased width for a larger progress bar */
@@ -137,7 +166,7 @@ h1 {
     padding: 10px;
     color: #FFFFFF;
     font-size: 27px;
-    background: linear-gradient(45deg, #ff3b3f, #0f0f0f);
+    background: linear-gradient(45deg, #ff3b3f, #0f0f0f57);
     border-radius: 8px;
     transition: transform 0.3s ease, background 0.3s ease;
     cursor: pointer; /* Change cursor to indicate interactivity */
@@ -206,7 +235,7 @@ h1 {
 
 /* Timer Bar */
 .timer-bar {
-    background: linear-gradient(45deg, #ff3b3f, #ff6b6b); /* Attractive gradient */
+    background: linear-gradient(45deg, #f34f03, #f9f108); /* Attractive gradient */
     height: 15px;
     width: 100%;
     border-radius: 10px;

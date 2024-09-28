@@ -61,7 +61,7 @@ h1 {
     top: 20px; /* Distance from the top of the viewport */
     left: 50%; /* Center horizontally */
     transform: translateX(-50%); /* Adjust to the exact center */
-    color: #fc5102;
+    color: #fc0202;
     font-size: 40px;
     font-weight: 700;
     text-transform: uppercase;
