@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-    {% load static %}
+{% load static %}
 <style>
     body {
-            background-image: url("{% static 'img/r1_bg.jpg' %}");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            font-family: 'Nunito', sans-serif;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-        }
+        background-image: url("{% static 'img/r1_bg.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        font-family: 'Nunito', sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+    }
+
+   
 </style>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Styled Quiz</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
     
     <!-- Link to the CSS file -->
     <link rel="stylesheet" href="{% static 'css/r1_quest.css' %}">
@@ -29,6 +31,8 @@
 
 <body>
     <!-- Team name outside, just above quiz-container -->
+    <div id="heading"><h3>ROUND 1</h3></div>
+
     <div class="leader-board">
         <h2>LEADER BOARD</h2>
         {% for team in teams %}
@@ -85,17 +89,18 @@
     <div class="progress-bar">
         <div class="progress" id="progress"></div>
     </div>
-
+    
+    {% if bnt == "qes" %}
     <div class="timer-container">
-        <div class="timer">16</div><!-- Timer display -->
+        <div class="timer">25</div><!-- Timer display -->
         <div class="timer-bar" id="timer-bar"></div> <!-- Shrinking timer bar -->
     </div>
-    
+    {% endif %}
 
     <script>
         let timerInterval;
         let timerRunning = false;
-        let remainingTime = 16; // 16 seconds
+        let remainingTime = 25; // 16 seconds
 
         document.addEventListener('DOMContentLoaded', function () {
             document.addEventListener('keydown', function (event) {
@@ -146,29 +151,27 @@
         });
 
         function startTimer() {
-    timerRunning = true;
-    const timerBar = document.getElementById('timer-bar');
-    const totalDuration = remainingTime;
+            timerRunning = true;
+            const timerBar = document.getElementById('timer-bar');
+            const totalDuration = remainingTime;
 
-    timerInterval = setInterval(() => {
-        remainingTime--;
-        updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                remainingTime--;
+                updateTimerDisplay();
 
-        // Calculate the new width of the timer bar based on remaining time
-        const barWidthPercent = (remainingTime / totalDuration);
-        if (timerBar) {
-            timerBar.style.transform = `scaleX(${barWidthPercent})`; // Scale the bar from center
+                // Calculate the new width of the timer bar based on remaining time
+                const barWidthPercent = (remainingTime / totalDuration);
+                if (timerBar) {
+                    timerBar.style.transform = `scaleX(${barWidthPercent})`; // Scale the bar from center
+                }
+
+                if (remainingTime <= 0) {
+                    clearInterval(timerInterval);
+                    timerRunning = false;
+                    // Handle timer expiration action here
+                }
+            }, 1000); // Update every second (1000ms)
         }
-
-        if (remainingTime <= 0) {
-            clearInterval(timerInterval);
-            timerRunning = false;
-            // Handle timer expiration action here
-        }
-    }, 1000); // Update every second (1000ms)
-}
-
-
 
         function pauseTimer() {
             clearInterval(timerInterval);
