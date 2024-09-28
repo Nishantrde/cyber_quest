@@ -114,7 +114,7 @@ def r1_quest(request):
             i += 1
             bnt = "qes"
 
-       
+        
         if i < count:
             quest = quests[i]
             if pas_s:
@@ -122,8 +122,10 @@ def r1_quest(request):
             elif k == len(teams):
                 print(k)
                 team = list(tm.objects.all().order_by('id'))[len(teams)]
+                
             else:
                 team = teams[k]
+
         else:
             return redirect("/graph1")
 
@@ -139,6 +141,7 @@ def r1_quest(request):
         "ans": ans, 
         "pas_s": pas_s,
         "count": count,
+        "spec": False if team != "spectators" else True
     })
 
 def ws(request):

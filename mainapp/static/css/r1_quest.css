@@ -1,13 +1,27 @@
+/* Import Nunito font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
 body {
     background-color: #121212;
     color: #fff;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Nunito', sans-serif; /* Change font to Nunito */
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 0;
+    animation: fadeIn 1.5s ease-in-out; /* Add fade-in animation */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 /* Team Container Styles */
@@ -87,7 +101,6 @@ h1 {
     transition: width 1s linear;
 }
 
-
 /* Leaderboard Styling */
 .leader-board {
     position: fixed;
@@ -124,7 +137,7 @@ h1 {
     padding: 10px;
     color: #FFFFFF;
     font-size: 27px;
-    background: linear-gradient(45deg, #f44336, #0f0f0f);
+    background: linear-gradient(45deg, #ff3b3f, #0f0f0f);
     border-radius: 8px;
     transition: transform 0.3s ease, background 0.3s ease;
     cursor: pointer; /* Change cursor to indicate interactivity */
@@ -144,37 +157,9 @@ h1 {
     font-weight: 500;
 }
 
-/* Team Container Styles */
-.team {
-    display: flex;
-    justify-content: center; /* Center the content horizontally */
-    align-items: center; /* Center the content vertically */
-    background: #1c1e24; /* Background gradient */
-    padding: 20px 40px; /* Spacing inside the container */
-    border-radius: 15px; /* Rounded corners */
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5); /* Box shadow for depth */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
-    margin-bottom: 20px; /* Space below the container */
-    width: fit-content; /* Adjust width to content */
-    cursor: pointer; /* Change cursor on hover */
-}
-
-.team h1 {
-    font-family: 'Poppins', sans-serif; /* Use a modern font */
-    font-size: 36px; /* Increase font size */
-    color: #ffffff; /* Text color */
-    margin: 0; /* Remove default margin */
-    background: linear-gradient(135deg, #f44336, #ca2323); /* Text gradient */
-    -webkit-background-clip: text; /* Clip gradient to text */
-    -webkit-text-fill-color: transparent; /* Make text fill transparent to show gradient */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for 3D effect */
-    letter-spacing: 1px; /* Spacing between letters */
-    animation: glow 1.5s infinite alternate; /* Glow effect animation */
-}
-
 /* Option Button Styles */
 .option-button {
-    background-color: #b71c1c;
+    background-color: #ff3b3f;
     border: none;
     color: white;
     padding: 15px;
@@ -189,13 +174,46 @@ h1 {
 }
 
 .option-button:hover {
-    background-color: #f44336;
+    background-color: #ff3b3f;
 }
 
 /* Response Message Styles */
 .response-message {
     font-size: 22px;
     font-weight: 700;
-    color: #e74c3c;
+    color: #ff3b3f;
     margin-top: 20px;
 }
+
+
+/* Timer Container */
+.timer-container {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;
+    width: 500px; /* Width of the timer bar */
+    margin-top: 20px;
+}
+
+/* Timer Display */
+.timer {
+    font-size: 30px; /* Increase font size for better visibility */
+    font-weight: 700;
+    color: #FFD700; /* Gold color for the timer */
+    margin-bottom: 10px; /* Space between timer display and bar */
+    text-shadow: 0px 0px 5px rgba(255, 215, 0, 0.7); /* Add a soft glow effect */
+}
+
+/* Timer Bar */
+.timer-bar {
+    background: linear-gradient(45deg, #ff3b3f, #ff6b6b); /* Attractive gradient */
+    height: 15px;
+    width: 100%;
+    border-radius: 10px;
+    transform-origin: center; /* Shrink from center */
+    transform: scaleX(1); /* Initially full width */
+    transition: transform 0.5s linear; /* Smooth shrinking effect */
+}
+
+
+
