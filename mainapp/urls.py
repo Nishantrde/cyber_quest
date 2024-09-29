@@ -9,7 +9,7 @@ urlpatterns = [
     path("r2", r2),
     path("r2_quest", r2_quest),
     path("r1_quest", r1_quest),
-    path("graph1", graph1),
+    path("graph", graph),
     path("ws",ws),
     path("ws_r",round_ws),
 ]

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kasual Round</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/r1.css' %}">
+</head>
+<body>
+   <div class="container">
+        <h1 id="heading">MCQ</h1>
+        <div id="line1"></div>
+        <!-- <img src="{% static 'img/kasual.jpg' %}" alt="casual Round Image" id="kasual"> -->
+        <div id="line"></div>
+    </div>
+
+    <script>
+        // Function to listen for the spacebar key press
+        document.addEventListener('keydown', function(event) {
+            if (event.code === 'Enter') {
+                // Select the heading, image, and lines
+                var heading = document.getElementById('heading');
+                var image = document.getElementById('kasual');
+                var line1 = document.getElementById('line1');
+                var line = document.getElementById('line');
+                
+                // Add fade-out class to all elements
+                heading.classList.add('fade-out');
+                image.classList.add('fade-out');
+                line1.classList.add('fade-out');
+                line.classList.add('fade-out');
+
+                // Wait for 1 second (1000ms) before redirecting
+                setTimeout(function() {
+                    window.location.href = '/r1_quest';  // Redirect to the desired URL
+                }, 1000);  // 1 second delay matches the fade-out effect
+            }
+        });
+        
+    </script>
+</body>
+</html>

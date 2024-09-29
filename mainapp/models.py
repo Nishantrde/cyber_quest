@@ -8,9 +8,10 @@ class Team(models.Model):
     def __str__(self):
         return f"{self.team_name}"
 
-class Round1_rules(models.Model):
+class Rounds(models.Model):
     round_name = models.CharField(max_length=250)
     rules = models.JSONField(default=list)
+    round = models.CharField(default="", max_length=250)
     
     def __str__(self):
         return f"{self.round_name}"

@@ -18,12 +18,10 @@
     </div>
     <div class="disclaimer-container" id="disclaimer-text">
         <p class="disclaimer-text">
-            These are the rules for this round:<br>
-    All participants must submit their answers within 30 seconds after the question is asked.<br>
-    Each question is worth 10 points. Incorrect answers will not receive any points.<br>
-    Participants are allowed to use reference materials, but they must not consult others during the quiz.<br>
-    In case of a tie, the participant with the most correct answers will be declared the winner.<br>
-    Any form of cheating or misconduct will result in disqualification.<br>
+            {% for rule in rounds %}
+                    {{ rule }} <br>
+                {% endfor %}
+
         </p>
         
     </div>

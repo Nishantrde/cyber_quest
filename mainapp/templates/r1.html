@@ -6,14 +6,29 @@
     <title>Kasual Round</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/r1.css' %}">
+    
 </head>
 <body>
-   <div class="container">
-        <h1 id="heading">Kasual Round</h1>
+    <div class="container">
+        <h1 id="heading">Casual Round</h1>
         <div id="line1"></div>
-        <img src="{% static 'img/kasual.jpg' %}" alt="casual Round Image" id="kasual">
+        
+        <!-- Wrapper for image and rules side by side -->
+        <div class="content-wrapper">
+            <img src="{% static 'img/kasual.jpg' %}" alt="Casual Round Image" id="kasual">
+            <div id="rules">
+                <h2>Rules</h2>
+                <ul id="rules-list">
+                    {% for rule in rounds %}
+                        <li>{{ rule }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        
         <div id="line"></div>
     </div>
+    
 
     <script>
         // Function to listen for the spacebar key press
@@ -37,7 +52,6 @@
                 }, 1000);  // 1 second delay matches the fade-out effect
             }
         });
-        
     </script>
 </body>
 </html>

@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Quest_round1 as qr
 from .models import Quest_round2 as qr2
+from .models import Rounds as rd
 from .models import Team as tm
-
-
 
 def index(request):
     return render(request, "index.html")
@@ -12,10 +11,14 @@ def display_teams(request):
     return render(request, "teams.html")
 
 def r1_rules(request):
-    return render(request, "r1_rules.html")
+    rounds = rd.objects.filter(round="disclaimer").first()
+    print(type(rounds.rules))
+    return render(request, "r1_rules.html", {"rounds": rounds.rules})
 
 def r1(request):
-    return render(request, "r1.html")
+    rounds = rd.objects.filter(round="round1").first()
+    print(type(rounds.rules))
+    return render(request, "r1.html", {"rounds": rounds.rules})
 
 
 def r2_quest(request):
@@ -127,7 +130,7 @@ def r1_quest(request):
                 team = teams[k]
 
         else:
-            return redirect("/graph1")
+            return redirect("/graph")
 
     return render(request, 'r1_quest.html', {
         "quest": quest,
@@ -150,7 +153,7 @@ def ws(request):
 def round_ws(request):
     return render(request, "round_cs.html")
 
-def graph1(request):
+def graph(request):
     # Fetch all team objects from the database
     teams = tm.objects.all().order_by('id')
 
@@ -159,7 +162,7 @@ def graph1(request):
     frequencies = [team.score for team in teams]
 
     # Render the template and pass the data
-    return render(request, "graph1.html", {
+    return render(request, "graph.html", {
         "categories": categories,
         "frequencies": frequencies,
         "teams": teams

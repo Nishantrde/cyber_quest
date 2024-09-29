@@ -8,14 +8,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     {% load static %}
-
     <link rel="stylesheet" href="{% static 'css/graph1.css' %}">
-    
 </head>
 <body>
-
     <h1 id="heading">LEADER BOARD</h1>
-
     <div class="frequency_Chart">
         <canvas id="frequencyChart"></canvas>
     </div>
@@ -31,7 +27,7 @@
         var categories = {{ categories|safe }};
         var frequencies = {{ frequencies|safe }};
         var maxFrequency = Math.max(...frequencies);
-        
+
         var frequencyChart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -85,7 +81,13 @@
             },
             plugins: [ChartDataLabels]
         });
-    </script>
 
+        // Redirect to "/r1" when Enter key is pressed
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                window.location.href = "/r2";
+            }
+        });
+    </script>
 </body>
 </html>
