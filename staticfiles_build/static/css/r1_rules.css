@@ -79,11 +79,12 @@ body {
 
 /* Disclaimer Container Styling */
 .disclaimer-container {
-    text-align: center;
+    text-align: center; /* Centers the text horizontally */
     max-width: 600px;
     padding: 20px;
     border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.8);
+    margin: 0 auto; /* Centers the container itself */
     animation: fadeIn 3s ease-in-out;
 }
 
@@ -94,7 +95,9 @@ body {
     margin-bottom: 20px;
     line-height: 1.8; /* Slightly increased line height for better spacing */
     text-shadow: 0 0 5px rgba(255, 0, 0, 0.5); /* Subtle red glow */
+    text-align: center; /* Centers the text within the container */
 }
+
 
 /* Ensure the canvas fills the screen and centers the visualization */
 #visualizer {
