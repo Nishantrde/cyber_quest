@@ -30,7 +30,7 @@ class Quest_round1(models.Model):
 class Quest_round2(models.Model):
     qes_id = models.IntegerField(default = 0)
     quest = models.CharField(max_length=255)
-    ans = models.IntegerField(default=10)
+    ans = models.IntegerField(default=1)
     option1 = models.CharField(default = "",max_length=100)
     option2 = models.CharField(default = "",max_length=100)
     option3 = models.CharField(default = "",max_length=100)

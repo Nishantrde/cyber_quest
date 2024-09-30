@@ -1,89 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Styled Quiz</title>
+    <title>Quiz Round 2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/r1_quest.css' %}">
 </head>
-
 <body>
-    <!-- Team name outside, just above quiz-container -->
+
+
+    <div class="leader-board">
+        <h2>LEADER BOARD</h2>
+        {% for team in teams %}
+            <div class="team-score">
+                <span class="team-name">{{ team }}</span>
+                <span class="team-score">{{ team.score }}</span>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Display team name -->
     <div class="team-container">
         <div class="team">
             <h1>{{ team.team_name }}</h1>
         </div>
     </div>
 
+    <!-- Display question or answer feedback based on crr -->
     <div class="quiz-container">
-        <form method="post">
+        <form method="post" id="quiz-form" action="/r2_quest/{{count}}/{{team_id}}">
             {% csrf_token %}
-            <div class="question-text">
-                <h2>{{ quest.quest }}</h2>
-            </div>
-
-            <!-- KBC Style Options Table -->
-            <div class="options">
-                <table class="options-table">
-                    <tr>
-                        <td>
-                            <label for="option1" class="option-button">A. {{ quest.option1 }}</label>
-                        </td>
-                        <td>
-                            <label for="option2" class="option-button">B. {{ quest.option2 }}</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="option3" class="option-button">C. {{ quest.option3 }}</label>
-                        </td>
-                        <td>
-                            <label for="option4" class="option-button">D. {{ quest.option4 }}</label>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- Hidden inputs to store values -->
-            <input type="hidden" name="counter" value="{{ counter }}">
-            <input type="hidden" name="pass_counter" value="{{ pass_counter }}">
-            <input type="hidden" name="team_counter" value="{{ team_counter }}">
-            <input type="hidden" name="bnt" value="{{ bnt }}">
-
-            <!-- Submit button -->
             
+            {% if crr == "qes" %}
+                <!-- Display the question when crr is 'qes' -->
+                <div class="question-text">
+                    <h2>{{ quest.quest }}</h2>
+                </div>
+                <!-- KBC Style Options Table -->
+                <div class="options">
+                    <table class="options-table">
+                        <tr>
+                            <td>
+                                <span class="option-button">A. {{ quest.option1 }}</span>
+                            </td>
+                            <td>
+                                <span class="option-button">B. {{ quest.option2 }}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="option-button">C. {{ quest.option3 }}</span>
+                            </td>
+                            <td>
+                                <span class="option-button">D. {{ quest.option4 }}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            {% elif crr == "ans" %}
+                <!-- Display feedback when crr is 'ans' -->
+                <div class="feedback">
+                    {% if check == 1 %}
+                        <p class="correct-answer">Correct Answer!</p>
+                        <p class="correct-answer">{{ans}}</p>
 
-            <div class="status-bar">
-                <div class="question-counter">Question {{ d_counter }} of {{ count }}</div>
-            </div>
+                    {% elif check == 0 %}
+                        <p class="wrong-answer">Wrong Answer!</p>
+                        <p class="correct-answer">{{ans}}</p>
 
-            <div class="progress-bar">
-                <div class="progress" id="progress"></div>
-            </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+    
+            <!-- Hidden input to store the selected answer -->
+            <input type="hidden" name="answer" id="answer-input" value="">
+            <input type="hidden" name="counter" value="{{ counter }}">
+            <input type="hidden" name="team_counter" value="{{ team_counter }}">
+            <input type="hidden" name="crr" id="crr" value="{{crr}}">
+
+            <button type="submit" class="submit-btn" style="display: none;">Submit</button>
         </form>
     </div>
 
+    <div class="status-bar">
+        <div class="question-counter">Question {{ counter }} of 12</div>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+    
+    {% if crr == "qes" %}
+    <div class="timer-container">
+        <div class="timer">25</div><!-- Timer display -->
+        <div class="timer-bar" id="timer-bar"></div> <!-- Shrinking timer bar -->
+    </div>
+    {% endif %}
+    
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Fix progress bar calculation and animation
-            const progressBar = document.getElementById('progress');
-            const totalQuestions = parseInt('{{ count }}', 10);  // Total number of questions in the quiz
-            const currentQuestion = parseInt('{{ d_counter }}', 10); // Current question number
+    const form = document.getElementById('quiz-form');
+    const answerInput = document.getElementById('answer-input');
+
+    // Variables for timer
+    let remainingTime = 25;  // Adjust the starting time if necessary
+    let timerRunning = false;
+    let timerInterval;
+            
+    // Listen for keydown events
+    document.addEventListener('keydown', function (event) {
+        // Check if the key pressed is 1, 2, 3, or 4
+        if (event.key === '1' || event.key === '2' || event.key === '3' || event.key === '4') {
+            // Set the selected answer in the hidden input field
+            answerInput.value = event.key;
+        }
+
+        // Submit the form if the "Enter" key is pressed
+        if (event.key === 'Enter') {
+            if (answerInput.value) {  // Only submit if an answer is selected
+                form.submit();
+            } else {
+                alert("Please select an answer by pressing 1, 2, 3, or 4 before pressing Enter.");
+            }
+        }
+
+        // Start the timer if the space bar is pressed
+        if (event.key === ' ') {
+            event.preventDefault(); // Prevent the default action of the space key (scrolling)
+            if (!timerRunning) {
+                startTimer();
+            }
+        }
+    });
+    const progressBar = document.getElementById('progress');
+            const totalQuestions = parseInt('12', 10);
+            const currentQuestion = parseInt('{{ counter }}', 10);
 
             if (totalQuestions > 0 && currentQuestion > 0) {
-                // Ensure progress is calculated properly
                 const progressPercent = (currentQuestion / totalQuestions) * 100;
-
-                // Apply progress only if calculated percentage is valid
                 if (progressPercent <= 100 && progressPercent >= 0) {
                     progressBar.style.width = progressPercent + '%';
                 }
             }
-        });
-    </script>
-</body>
+    function startTimer() {
+        timerRunning = true;
+        const timerBar = document.getElementById('timer-bar');
+        const totalDuration = remainingTime;
 
+        timerInterval = setInterval(() => {
+            remainingTime--;
+            updateTimerDisplay();
+
+            // Calculate the new width of the timer bar based on remaining time
+            const barWidthPercent = (remainingTime / totalDuration);
+            if (timerBar) {
+                timerBar.style.transform = `scaleX(${barWidthPercent})`; // Scale the bar from center
+            }
+
+            if (remainingTime <= 0) {
+                clearInterval(timerInterval);
+                timerRunning = false;
+                // Handle timer expiration action here
+            }
+        }, 1000); // Update every second (1000ms)
+    }
+
+    function pauseTimer() {
+        clearInterval(timerInterval);
+        timerRunning = false;
+    }
+
+    function updateTimerDisplay() {
+        const timerDisplay = document.querySelector('.timer');
+        if (timerDisplay) {
+            timerDisplay.textContent = remainingTime;
+        }
+    }
+});
+
+    </script>
+
+    <style>
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 35px;
+        }
+
+        .wrong-answer {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 35px;
+        }
+    </style>
+
+</body>
 </html>

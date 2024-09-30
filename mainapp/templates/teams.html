@@ -220,7 +220,7 @@ function decreaseVolumeAndRedirect() {
                 audio.volume = currentVolume;
             } else {
                 clearInterval(interval);
-                window.location.href = '/r1_rules'; // Redirect when volume reaches 0
+                window.location.href = '/dis'; // Redirect when volume reaches 0
             }
         }, 100); // Decrease volume every 100ms
     }

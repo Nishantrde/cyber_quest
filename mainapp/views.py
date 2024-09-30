@@ -20,12 +20,111 @@ def r1(request):
     print(type(rounds.rules))
     return render(request, "r1.html", {"rounds": rounds.rules})
 
-
-def r2_quest(request):
-    teams = list(tm.objects.all().order_by('id'))[:-1]
+def r2_quest(request, id, team_id):
+    print(team_id)
+    teams = list(tm.objects.filter(spec=False).order_by('id'))[::-1]
     quests = list(qr2.objects.all().order_by('qes_id'))
+    check = ""
+    crr = ""
+    ans = ""  # Initialize ans
     
-    return render(request, "r2_quest.html",{"team":teams[0], "quest":quests[0]})
+    if request.method == "GET":
+        
+        crr = "qes"
+
+    if request.method == "POST":
+        crr = request.POST.get("crr")
+        inp = int(request.POST.get("answer"))
+        
+        # Toggle crr and update the question id
+        crr = "ans" if crr == "qes" else "qes" 
+        # Check if the selected answer is correct
+        check = 1 if quests[id].ans == inp else 0
+
+        # Determine the correct option (match quests[id].ans with the options)
+        correct_answer = quests[id].ans
+        if crr == "qes":
+            team_id = team_id+1 if team_id<5 else 0
+            id = id + 1 if crr == "qes" else id
+        else:
+            print(crr)
+            
+        if correct_answer == 1 and crr == "ans":
+            ans = quests[id].option1
+            if check == 1:
+                
+                team = tm.objects.get(id=team_id+1)  # Fetch the team
+                team.score += quests[id].score
+                team.save()
+                print("score", team.score, team)
+            else:
+                team = tm.objects.get(id=team_id+1)  # Fetch the team
+                team.score -= quests[id].deduct
+                team.save()
+                print("score", team.score, team)
+                
+
+        elif correct_answer == 2 and crr == "ans":
+            ans = quests[id].option2
+            if check == 1:
+                
+                team = tm.objects.get(id=team_id+1)  # Fetch the team
+                team.score += quests[id].score
+                team.save()
+                print("score", team.score, team)
+            else:
+                team = tm.objects.get(id=team_id+1)  # Fetch the team
+                team.score -= quests[id].deduct
+                team.save()
+                print("score", team.score, team)
+                
+
+        elif correct_answer == 3 and crr == "ans":
+            ans = quests[id].option3
+            if check == 1:
+                
+                team = tm.objects.get(id=team_id+1)  # Fetch the team
+                team.score += quests[id].score
+                team.save()
+                print("score", team.score, team)
+            else:
+                team = tm.objects.get(id=team_id+1)  # Fetch the team
+                team.score -= quests[id].deduct
+                team.save()
+                print("score", team.score, team)
+                
+
+        elif correct_answer == 4 and crr == "ans":
+            ans = quests[id].option4
+            if check == 1:
+                
+                team = tm.objects.get(id=team_id+1)  # Fetch the team
+                team.score += quests[id].score
+                team.save()
+                print("score", team.score, team)
+            else:
+                team = tm.objects.get(id=team_id+1)  # Fetch the team
+                team.score -= quests[id].deduct
+                team.save()
+                print("score", team.score, team)
+                
+
+
+        
+        print(inp)
+        print(quests[id].ans)
+    
+    return render(request, 'r2_quest.html', {
+        "count": id,
+        "quest": quests[id],
+        "teams": list(tm.objects.filter(spec=False).order_by('score'))[::-1],
+        "crr": crr,
+        "team":tm.objects.get(id=team_id+1),
+        "team_id":team_id,
+        "check": check,
+        "ans": ans,  # Pass the correct answer option to the template
+        "counter": id + 1
+    })
 
 
 def r1_quest(request):
@@ -130,7 +229,7 @@ def r1_quest(request):
                 team = teams[k]
 
         else:
-            return redirect("/graph")
+            return redirect("/graph/r2")
 
     return render(request, 'r1_quest.html', {
         "quest": quest,
@@ -153,7 +252,7 @@ def ws(request):
 def round_ws(request):
     return render(request, "round_cs.html")
 
-def graph(request):
+def graph(request, id):
     # Fetch all team objects from the database
     teams = tm.objects.all().order_by('id')
 
@@ -165,7 +264,8 @@ def graph(request):
     return render(request, "graph.html", {
         "categories": categories,
         "frequencies": frequencies,
-        "teams": teams
+        "teams": teams,
+        "next": id,
     })
 
 

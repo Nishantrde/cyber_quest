@@ -16,28 +16,29 @@
     </div>
 
     <script>
-        // Function to listen for the spacebar key press
+        // Function to listen for the spacebar or Enter key press
         document.addEventListener('keydown', function(event) {
-            if (event.code === 'Enter') {
-                // Select the heading, image, and lines
+            if (event.key === 'Enter' || event.keyCode === 13) {
+                // Select the heading, lines (ignore image if it's commented out)
                 var heading = document.getElementById('heading');
-                var image = document.getElementById('kasual');
+                var image = document.getElementById('kasual');  // Will be null if image is not present
                 var line1 = document.getElementById('line1');
                 var line = document.getElementById('line');
                 
                 // Add fade-out class to all elements
                 heading.classList.add('fade-out');
-                image.classList.add('fade-out');
+                if (image) {  // Only apply to image if it exists
+                    image.classList.add('fade-out');
+                }
                 line1.classList.add('fade-out');
                 line.classList.add('fade-out');
 
                 // Wait for 1 second (1000ms) before redirecting
                 setTimeout(function() {
-                    window.location.href = '/r1_quest';  // Redirect to the desired URL
+                    window.location.href = '/r2_quest/0/0';  // Redirect to the desired URL
                 }, 1000);  // 1 second delay matches the fade-out effect
             }
         });
-        
     </script>
 </body>
 </html>
