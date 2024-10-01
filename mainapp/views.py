@@ -20,9 +20,14 @@ def r1(request):
     print(type(rounds.rules))
     return render(request, "r1.html", {"rounds": rounds.rules})
 
+def r2(request):
+    rounds = rd.objects.filter(round="round2").first()
+    print(type(rounds.rules))
+    return render(request, "r2.html", {"rounds": rounds.rules})
+
 def r2_quest(request, id, team_id):
-    print(team_id)
-    teams = list(tm.objects.filter(spec=False).order_by('id'))[::-1]
+    if id>11:
+        return redirect("/graph/r3")
     quests = list(qr2.objects.all().order_by('qes_id'))
     check = ""
     crr = ""
@@ -108,8 +113,6 @@ def r2_quest(request, id, team_id):
                 team.save()
                 print("score", team.score, team)
                 
-
-
         
         print(inp)
         print(quests[id].ans)
@@ -269,7 +272,6 @@ def graph(request, id):
     })
 
 
-def r2(request):
-    return render(request, "r2.html")
+
 
 

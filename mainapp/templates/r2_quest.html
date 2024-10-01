@@ -6,11 +6,26 @@
     <title>Quiz Round 2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/r1_quest.css' %}">
+    <style>
+        body {
+            background-image: url("{% static 'img/r2_bg.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+    
+       
+    </style>
+    <link rel="stylesheet" href="{% static 'css/r2_quest.css' %}">
+
 </head>
 <body>
 
-
+    <h1 id="heading">MCQ Round</h1>
     <div class="leader-board">
         <h2>LEADER BOARD</h2>
         {% for team in teams %}
@@ -94,7 +109,7 @@
     
     {% if crr == "qes" %}
     <div class="timer-container">
-        <div class="timer">25</div><!-- Timer display -->
+        <div class="timer">15</div><!-- Timer display -->
         <div class="timer-bar" id="timer-bar"></div> <!-- Shrinking timer bar -->
     </div>
     {% endif %}
@@ -105,7 +120,7 @@
     const answerInput = document.getElementById('answer-input');
 
     // Variables for timer
-    let remainingTime = 25;  // Adjust the starting time if necessary
+    let remainingTime = 15;  // Adjust the starting time if necessary
     let timerRunning = false;
     let timerInterval;
             

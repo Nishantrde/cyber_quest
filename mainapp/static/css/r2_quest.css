@@ -98,11 +98,11 @@ h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.496); /* Slightly transparent background */
+    background-color: rgba(0, 0, 0, 0.679); /* Slightly transparent background */
     padding: 10px 15px;
     border-radius: 10px;
     z-index: 200; /* Ensures the status bar is above other elements */
-    box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+    box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.894); /* Shadow for depth */
 }
 
 .question-counter {
@@ -116,7 +116,7 @@ h1 {
     top: 110px; /* Increased distance from the top of the viewport for more gap */
     left: 20px; /* Aligns with the status bar */
     height: 10px; /* Increased height for a thicker progress bar */
-    background-color: #38383886;
+    background-color: #3838389f;
     border-radius: 8px;
     overflow: hidden;
     width: 300px; /* Increased width for a larger progress bar */
@@ -191,19 +191,34 @@ h1 {
     background-color: #ff3b3f;
     border: none;
     color: white;
-    padding: 15px;
+    padding: 20px 25px; /* Increased padding for larger buttons */
     text-align: center;
     display: block;
-    font-size: 18px;
+    font-size: 20px; /* Slightly increased font size */
     margin: 10px 0;
     cursor: pointer;
-    width: 100%;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    width: 100%; /* Full width for better spacing */
+    border-radius: 8px; /* Slightly rounded corners */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth hover and click effects */
 }
 
 .option-button:hover {
-    background-color: #ff3b3f;
+    background-color: #ff6347;
+    transform: scale(1.05); /* Add a slight hover effect for interactivity */
+}
+
+/* KBC Style Options Table */
+.options-table {
+    width: 100%; /* Full width of container */
+    max-width: 800px; /* Maximum width to ensure text doesn't stretch too far */
+    margin: 0 auto; /* Center the table */
+    text-align: center;
+    border-spacing: 15px; /* Space between options */
+}
+
+/* Ensure the buttons take up equal width in each row */
+.options-table td {
+    width: 50%; /* Ensure equal width for options */
 }
 
 /* Response Message Styles */
