@@ -195,23 +195,17 @@ h1 {
     border-spacing: 20px;
   }
   
-  /* Common option box styles */
-  .option-box {
-    display: flex;
-    align-items: center;
-    background-color: #424040be;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    transition: box-shadow 0.3s;
-  }
-  
-  .option-box:hover {
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
-  }
-  
-  /* Styles for the label (A, B, C, D) */
-  .option-label {
+/* Base styles for the table */
+.styled-options-table {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    border-spacing: 20px;
+}
+
+/* Styles for the label (A, B, C, D) */
+.option-label {
     display: inline-block;
     color: white;
     padding: 20px;
@@ -220,22 +214,44 @@ h1 {
     background-color: #007BFF;
     clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%); /* Trapezoid shape */
     margin-right: 15px;
-  }
-  
-  /* Individual label colors */
-  .option-a { background-color: #007BFF; } /* Blue */
-  .option-b { background-color: #00D4A3; } /* Teal */
-  .option-c { background-color: #FF3B3F; } /* Red */
-  .option-d { background-color: #FF851B; } /* Orange */
-  
-  /* Styles for the option text */
-  .option-text {
-    font-size: 18px;
+}
+
+/* Individual label colors */
+.option-a { background-color: #007BFF; } /* Blue */
+.option-b { background-color: #00D4A3; } /* Teal */
+.option-c { background-color: #FF3B3F; } /* Red */
+.option-d { background-color: #FF851B; } /* Orange */
+
+.option-box {
+    display: flex;
+    align-items: center;
+    background-color: #424040be;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s;
+    width: 396px; /* Ensure each option box takes up full width */
+    max-width: 800px; /* Limit maximum width to prevent excessive expansion */
+    margin-bottom: 20px; /* Add margin for spacing between options */
+    min-height: 100px; /* Ensure a minimum height */
+    height: 124px; /* Set a fixed height for all option boxes */
+    flex-grow: 1; /* Ensure it expands to fit the content */
+}
+
+/* Ensure all option boxes have the same height */
+.option-text {
+    flex: 1;
+    font-size: 25px;
     font-family: 'Nunito', sans-serif;
     font-weight: 600;
     color: #fcfcfc;
-  }
-  
+    overflow-wrap: break-word; /* Wrap long text */
+    text-align: left; /* Align text to the left for better readability */
+    min-height: 100px; /* Ensure consistent height regardless of content */
+}
+
+
+
 /* Response Message Styles */
 .response-message {
     font-size: 22px;
