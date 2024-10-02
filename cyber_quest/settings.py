@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,6 +33,8 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'cloudinary_storage',
+    'cloudinary',
     'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,6 +46,13 @@ INSTALLED_APPS = [
     'channels',
 ]
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dwfdyavop',
+    'API_KEY': '357392989671467',
+    'API_SECRET': '6tFBeweXQQ10c2-ij8gF7igBj2A',
+}
+
+# Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -70,9 +81,9 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'cyber_quest.wsgi.application'
 ASGI_APPLICATION = 'cyber_quest.asgi.application'
 
+# Channel Layers
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
@@ -82,69 +93,14 @@ CHANNEL_LAYERS = {
     },
 }
 
-# CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "channels.layers.InMemoryChannelLayer",
-#     },
-# }
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'railway',
-#         'USER': 'postgres',
-#         'PASSWORD': 'ELENaqQNamWgkPujRUECzhDaLYZTDwwM',
-#         'HOST': 'monorail.proxy.rlwy.net',
-#         'PORT': '53588',
-#     }
-# }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'railway',
-#         'USER': 'postgres',
-#         'PASSWORD': 'AErpbTvwdBMsEQvEHGSaJyaiLprshjAA',
-#         'HOST': 'viaduct.proxy.rlwy.net',
-#         'PORT': '57896',
-#     }
-# }
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-import dj_database_url
-
+# Database configuration
 DATABASES = {
-    'default': dj_database_url.parse("postgresql://cyber4719_user:JEZfyCMcTwFwaMDS0ZCQ1ImshOkgvFBX@dpg-crsf1fu8ii6s73ed0hfg-a.singapore-postgres.render.com/cyber4719")
-        
-    
-}   
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'cy_demo',
-#         'USER': 'nis',
-#         'PASSWORD': 'air19818',
-#         'HOST': 'database-1.c16ecmoouty2.ap-southeast-2.rds.amazonaws.com',
-#         'PORT': '5432',
-#     }
-# } 
+    'default': dj_database_url.parse(
+        "postgresql://cyber4719_user:JEZfyCMcTwFwaMDS0ZCQ1ImshOkgvFBX@dpg-crsf1fu8ii6s73ed0hfg-a.singapore-postgres.render.com/cyber4719"
+    )
+}
 
 # Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -160,37 +116,22 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
+STATIC_URL = '/static/'
 
-STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
-import os
-
-
-STATIC_URL = 'static/'
-
-STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
+# Cloudinary for static files storage
+STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 
+# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
