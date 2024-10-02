@@ -26,8 +26,7 @@ def r2(request):
     return render(request, "r2.html", {"rounds": rounds.rules})
 
 def r2_quest(request, id, team_id):
-    if id>11:
-        return redirect("/graph/r3")
+    
     quests = list(qr2.objects.all().order_by('qes_id'))
     check = ""
     crr = ""
@@ -115,6 +114,8 @@ def r2_quest(request, id, team_id):
                 
         
         print(inp)
+        if id>11:
+            return redirect("/graph/r3")
         print(quests[id].ans)
     
     return render(request, 'r2_quest.html', {
