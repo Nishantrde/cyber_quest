@@ -33,8 +33,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    'cloudinary_storage',
-    'cloudinary',
+    
     'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -131,7 +130,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
 # Cloudinary for static files storage
-STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticCloudinaryStorage'
+# STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticCloudinaryStorage'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

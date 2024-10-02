@@ -186,41 +186,56 @@ h1 {
     font-weight: 500;
 }
 
-/* Option Button Styles */
-.option-button {
-    background-color: #ff3b3f;
-    border: none;
+/* Base styles for the table */
+.styled-options-table {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    border-spacing: 20px;
+  }
+  
+  /* Common option box styles */
+  .option-box {
+    display: flex;
+    align-items: center;
+    background-color: #424040be;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s;
+  }
+  
+  .option-box:hover {
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Styles for the label (A, B, C, D) */
+  .option-label {
+    display: inline-block;
     color: white;
-    padding: 20px 25px; /* Increased padding for larger buttons */
-    text-align: center;
-    display: block;
-    font-size: 20px; /* Slightly increased font size */
-    margin: 10px 0;
-    cursor: pointer;
-    width: 100%; /* Full width for better spacing */
-    border-radius: 8px; /* Slightly rounded corners */
-    transition: background-color 0.3s, transform 0.3s; /* Smooth hover and click effects */
-}
-
-.option-button:hover {
-    background-color: #ff6347;
-    transform: scale(1.05); /* Add a slight hover effect for interactivity */
-}
-
-/* KBC Style Options Table */
-.options-table {
-    width: 100%; /* Full width of container */
-    max-width: 800px; /* Maximum width to ensure text doesn't stretch too far */
-    margin: 0 auto; /* Center the table */
-    text-align: center;
-    border-spacing: 15px; /* Space between options */
-}
-
-/* Ensure the buttons take up equal width in each row */
-.options-table td {
-    width: 50%; /* Ensure equal width for options */
-}
-
+    padding: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: #007BFF;
+    clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%); /* Trapezoid shape */
+    margin-right: 15px;
+  }
+  
+  /* Individual label colors */
+  .option-a { background-color: #007BFF; } /* Blue */
+  .option-b { background-color: #00D4A3; } /* Teal */
+  .option-c { background-color: #FF3B3F; } /* Red */
+  .option-d { background-color: #FF851B; } /* Orange */
+  
+  /* Styles for the option text */
+  .option-text {
+    font-size: 18px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    color: #fcfcfc;
+  }
+  
 /* Response Message Styles */
 .response-message {
     font-size: 22px;
