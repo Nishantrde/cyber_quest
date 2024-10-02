@@ -38,7 +38,7 @@ def r2_quest(request, id, team_id):
 
     if request.method == "POST":
         crr = request.POST.get("crr")
-        inp = int(request.POST.get("answer"))
+        inp = int(request.POST.get("answer")) if request.POST.get("answer") else 0
         
         # Toggle crr and update the question id
         crr = "ans" if crr == "qes" else "qes" 

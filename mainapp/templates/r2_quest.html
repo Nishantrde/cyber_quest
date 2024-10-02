@@ -17,8 +17,15 @@
             padding: 0;
             min-height: 100vh;
         }
-    
-       
+
+        /* Styling for highlighted option */
+        .selected {
+            background-color: #7db9e8 !important;
+            box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.5);
+            border: 2px solid #0000ff;
+        }
+
+        /* Other CSS */
     </style>
     <link rel="stylesheet" href="{% static 'css/r2_quest.css' %}">
 
@@ -49,21 +56,19 @@
             {% csrf_token %}
             
             {% if crr == "qes" %}
-                <!-- Display the question when crr is 'qes' -->
                 <div class="question-text">
                     <h2>{{ quest.quest }}</h2>
                 </div>
-                <!-- KBC Style Options Table -->
                 <table class="styled-options-table">
                     <tr>
                       <td>
-                        <div class="option-box">
+                        <div class="option-box" data-option="1">
                           <span class="option-label option-a">A</span>
                           <span class="option-text">{{ quest.option1 }}</span>
                         </div>
                       </td>
                       <td>
-                        <div class="option-box">
+                        <div class="option-box" data-option="2">
                           <span class="option-label option-b">B</span>
                           <span class="option-text">{{ quest.option2 }}</span>
                         </div>
@@ -71,22 +76,20 @@
                     </tr>
                     <tr>
                       <td>
-                        <div class="option-box">
+                        <div class="option-box" data-option="3">
                           <span class="option-label option-c">C</span>
                           <span class="option-text">{{ quest.option3 }}</span>
                         </div>
                       </td>
                       <td>
-                        <div class="option-box">
+                        <div class="option-box" data-option="4">
                           <span class="option-label option-d">D</span>
                           <span class="option-text">{{ quest.option4 }}</span>
                         </div>
                       </td>
                     </tr>
-                  </table>
-                  
+                </table>
             {% elif crr == "ans" %}
-                <!-- Display feedback when crr is 'ans' -->
                 <div class="feedback">
                     {% if check == 1 %}
                         <p class="correct-answer">Correct Answer!</p>
@@ -120,93 +123,200 @@
     
     {% if crr == "qes" %}
     <div class="timer-container">
-        <div class="timer">15</div><!-- Timer display -->
-        <div class="timer-bar" id="timer-bar"></div> <!-- Shrinking timer bar -->
+        <div class="timer">15</div>
+        <div class="timer-bar" id="timer-bar"></div>
     </div>
     {% endif %}
-    
+    {% if crr == "qes" %}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('quiz-form');
-    const answerInput = document.getElementById('answer-input');
-
-    // Variables for timer
-    let remainingTime = 15;  // Adjust the starting time if necessary
-    let timerRunning = false;
-    let timerInterval;
-            
-    // Listen for keydown events
-    document.addEventListener('keydown', function (event) {
-        // Check if the key pressed is 1, 2, 3, or 4
-        if (event.key === '1' || event.key === '2' || event.key === '3' || event.key === '4') {
-            // Set the selected answer in the hidden input field
-            answerInput.value = event.key;
-        }
-
-        // Submit the form if the "Enter" key is pressed
-        if (event.key === 'Enter') {
-            if (answerInput.value) {  // Only submit if an answer is selected
-                form.submit();
-            } else {
-                alert("Please select an answer by pressing 1, 2, 3, or 4 before pressing Enter.");
+            const form = document.getElementById('quiz-form');
+            const answerInput = document.getElementById('answer-input');
+            const options = document.querySelectorAll('.option-box');
+    
+            // Variables for timer
+            let remainingTime = 15;
+            let timerRunning = false;
+            let timerInterval;
+    
+            // Function to highlight the selected option
+            function highlightOption(optionNumber) {
+                options.forEach(option => {
+                    option.classList.remove('selected'); // Remove highlight from all options
+                    if (option.getAttribute('data-option') === optionNumber) {
+                        option.classList.add('selected'); // Highlight the selected option
+                    }
+                });
             }
-        }
-
-        // Start the timer if the space bar is pressed
-        if (event.key === ' ') {
-            event.preventDefault(); // Prevent the default action of the space key (scrolling)
-            if (!timerRunning) {
-                startTimer();
-            }
-        }
-    });
-    const progressBar = document.getElementById('progress');
-            const totalQuestions = parseInt('12', 10);
+    
+            // Listen for keydown events
+            document.addEventListener('keydown', function (event) {
+                if (['1', '2', '3', '4'].includes(event.key)) {
+                    answerInput.value = event.key; // Set the selected answer
+                    highlightOption(event.key); // Highlight the corresponding option
+                }
+    
+                if (event.key === 'Enter') {
+                    if (answerInput.value) {
+                        form.submit(); // Submit the form when "Enter" is pressed
+                    } else {
+                        alert("Please select an answer by pressing 1, 2, 3, or 4 before pressing Enter.");
+                    }
+                }
+    
+                // Spacebar toggles timer
+                if (event.key === ' ') {
+                    event.preventDefault();
+                    if (!timerRunning) {
+                        startTimer();
+                    } else {
+                        pauseTimer(); // Toggle to pause
+                    }
+                }
+            });
+    
+            // Timer and progress logic here...
+            const progressBar = document.getElementById('progress');
+            const totalQuestions = 12;
             const currentQuestion = parseInt('{{ counter }}', 10);
-
+    
             if (totalQuestions > 0 && currentQuestion > 0) {
                 const progressPercent = (currentQuestion / totalQuestions) * 100;
                 if (progressPercent <= 100 && progressPercent >= 0) {
                     progressBar.style.width = progressPercent + '%';
                 }
             }
-    function startTimer() {
-        timerRunning = true;
-        const timerBar = document.getElementById('timer-bar');
-        const totalDuration = remainingTime;
-
-        timerInterval = setInterval(() => {
-            remainingTime--;
-            updateTimerDisplay();
-
-            // Calculate the new width of the timer bar based on remaining time
-            const barWidthPercent = (remainingTime / totalDuration);
-            if (timerBar) {
-                timerBar.style.transform = `scaleX(${barWidthPercent})`; // Scale the bar from center
+    
+            // Timer functionality
+            function startTimer() {
+                timerRunning = true;
+                const timerBar = document.getElementById('timer-bar');
+                const totalDuration = remainingTime;
+    
+                timerInterval = setInterval(() => {
+                    remainingTime--;
+                    updateTimerDisplay();
+    
+                    // Calculate the new width of the timer bar based on remaining time
+                    const barWidthPercent = (remainingTime / totalDuration);
+                    if (timerBar) {
+                        timerBar.style.transform = `scaleX(${barWidthPercent})`; // Use template literals correctly
+                    }
+    
+                    if (remainingTime <= 0) {
+                        clearInterval(timerInterval);
+                        timerRunning = false;
+                        // Handle timer expiration action here, e.g., auto-submit
+                        form.submit();
+                    }
+                }, 1000); // Update every second (1000ms)
             }
-
-            if (remainingTime <= 0) {
-                clearInterval(timerInterval);
+    
+            function pauseTimer() {
+                clearInterval(timerInterval); // Stop the timer
                 timerRunning = false;
-                // Handle timer expiration action here
             }
-        }, 1000); // Update every second (1000ms)
-    }
-
-    function pauseTimer() {
-        clearInterval(timerInterval);
-        timerRunning = false;
-    }
-
-    function updateTimerDisplay() {
-        const timerDisplay = document.querySelector('.timer');
-        if (timerDisplay) {
-            timerDisplay.textContent = remainingTime;
-        }
-    }
-});
-
+    
+            function updateTimerDisplay() {
+                const timerDisplay = document.querySelector('.timer');
+                if (timerDisplay) {
+                    timerDisplay.textContent = remainingTime;
+                }
+            }
+        });
     </script>
+    
+    {% else %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('quiz-form');
+            const answerInput = document.getElementById('answer-input');
+            const options = document.querySelectorAll('.option-box');
+    
+            // Variables for timer
+            let remainingTime = 15;
+            let timerRunning = false;
+            let timerInterval;
+    
+            // Function to highlight the selected option
+            function highlightOption(optionNumber) {
+                options.forEach(option => {
+                    option.classList.remove('selected'); // Remove highlight from all options
+                    if (option.getAttribute('data-option') === optionNumber) {
+                        option.classList.add('selected'); // Highlight the selected option
+                    }
+                });
+            }
+    
+            // Listen for keydown events
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    form.submit(); // Submit the form when "Enter" is pressed
+                }
+    
+                // Spacebar toggles timer
+                if (event.key === ' ') {
+                    event.preventDefault();
+                    if (!timerRunning) {
+                        startTimer();
+                    } else {
+                        pauseTimer(); // Toggle to pause
+                    }
+                }
+            });
+    
+            // Timer and progress logic here...
+            const progressBar = document.getElementById('progress');
+            const totalQuestions = 12;
+            const currentQuestion = parseInt('{{ counter }}', 10);
+    
+            if (totalQuestions > 0 && currentQuestion > 0) {
+                const progressPercent = (currentQuestion / totalQuestions) * 100;
+                if (progressPercent <= 100 && progressPercent >= 0) {
+                    progressBar.style.width = progressPercent + '%';
+                }
+            }
+    
+            // Timer functionality
+            function startTimer() {
+                timerRunning = true;
+                const timerBar = document.getElementById('timer-bar');
+                const totalDuration = remainingTime;
+    
+                timerInterval = setInterval(() => {
+                    remainingTime--;
+                    updateTimerDisplay();
+    
+                    // Calculate the new width of the timer bar based on remaining time
+                    const barWidthPercent = (remainingTime / totalDuration);
+                    if (timerBar) {
+                        timerBar.style.transform = `scaleX(${barWidthPercent})`; // Use template literals correctly
+                    }
+    
+                    if (remainingTime <= 0) {
+                        clearInterval(timerInterval);
+                        timerRunning = false;
+                        // Handle timer expiration action here, e.g., auto-submit
+                        form.submit();
+                    }
+                }, 1000); // Update every second (1000ms)
+            }
+    
+            function pauseTimer() {
+                clearInterval(timerInterval); // Stop the timer
+                timerRunning = false;
+            }
+    
+            function updateTimerDisplay() {
+                const timerDisplay = document.querySelector('.timer');
+                if (timerDisplay) {
+                    timerDisplay.textContent = remainingTime;
+                }
+            }
+        });
+    </script>
+    
+    {% endif %}
 
     <style>
         .correct-answer {
