@@ -10,10 +10,10 @@ def index(request):
 def display_teams(request):
     return render(request, "teams.html")
 
-def r1_rules(request):
+def disclaimer(request):
     rounds = rd.objects.filter(round="disclaimer").first()
     print(type(rounds.rules))
-    return render(request, "r1_rules.html", {"rounds": rounds.rules})
+    return render(request, "disclaimer.html", {"rounds": rounds.rules})
 
 def r1(request):
     rounds = rd.objects.filter(round="round1").first()
@@ -33,7 +33,6 @@ def r2_quest(request, id, team_id):
     ans = ""  # Initialize ans
     
     if request.method == "GET":
-        
         crr = "qes"
 
     if request.method == "POST":

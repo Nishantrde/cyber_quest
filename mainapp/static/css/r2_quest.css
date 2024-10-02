@@ -186,6 +186,27 @@ h1 {
     font-weight: 500;
 }
 
+
+.round-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    z-index: 50;  /* Lower z-index to avoid overlap with visualizer */
+    transition: opacity 1s ease-in-out; /* Add smooth opacity transition */
+}
+
+#nahi {
+    width: 1700px; /* Set the desired width */
+    height: auto; /* Adjust height proportionally to maintain aspect ratio */
+    display: none; /* Initially hide the image */
+    animation: zoomIn 1s ease-out forwards; /* Apply the zoom-in animation */
+    z-index: 50;  /* Ensure image is below the visualizer */
+}
+
+
+
 /* Base styles for the table */
 .styled-options-table {
     width: 100%;

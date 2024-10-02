@@ -93,14 +93,27 @@
                 <div class="feedback">
                     {% if check == 1 %}
                         <p class="correct-answer">Correct Answer!</p>
+                        <div class="round-container">
+                            <video id="nahi" width="1700" autoplay>
+                                <source src="{% static 'vid/noice.mp4' %}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
                         <p class="correct-answer">{{ans}}</p>
 
                     {% elif check == 0 %}
                         <p class="wrong-answer">Wrong Answer!</p>
+                        <div class="round-container">
+                            <video id="nahi" width="1700" autoplay>
+                                <source src="{% static 'vid/nahi.mp4' %}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
                         <p class="correct-answer">{{ans}}</p>
 
                     {% endif %}
                 </div>
+                
             {% endif %}
     
             <!-- Hidden input to store the selected answer -->
