@@ -54,26 +54,37 @@
                     <h2>{{ quest.quest }}</h2>
                 </div>
                 <!-- KBC Style Options Table -->
-                <div class="options">
-                    <table class="options-table">
-                        <tr>
-                            <td>
-                                <span class="option-button">A. {{ quest.option1 }}</span>
-                            </td>
-                            <td>
-                                <span class="option-button">B. {{ quest.option2 }}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="option-button">C. {{ quest.option3 }}</span>
-                            </td>
-                            <td>
-                                <span class="option-button">D. {{ quest.option4 }}</span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                <table class="styled-options-table">
+                    <tr>
+                      <td>
+                        <div class="option-box">
+                          <span class="option-label option-a">A</span>
+                          <span class="option-text">{{ quest.option1 }}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="option-box">
+                          <span class="option-label option-b">B</span>
+                          <span class="option-text">{{ quest.option2 }}</span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="option-box">
+                          <span class="option-label option-c">C</span>
+                          <span class="option-text">{{ quest.option3 }}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="option-box">
+                          <span class="option-label option-d">D</span>
+                          <span class="option-text">{{ quest.option4 }}</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                  
             {% elif crr == "ans" %}
                 <!-- Display feedback when crr is 'ans' -->
                 <div class="feedback">
