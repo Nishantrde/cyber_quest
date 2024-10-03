@@ -187,23 +187,23 @@ h1 {
 }
 
 
-.round-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    z-index: 50;  /* Lower z-index to avoid overlap with visualizer */
-    transition: opacity 1s ease-in-out; /* Add smooth opacity transition */
+/* Center the video container */
+.video-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
+    margin: 20px 0;
 }
 
-#nahi {
-    width: 1700px; /* Set the desired width */
-    height: auto; /* Adjust height proportionally to maintain aspect ratio */
-    display: none; /* Initially hide the image */
-    animation: zoomIn 1s ease-out forwards; /* Apply the zoom-in animation */
-    z-index: 50;  /* Ensure image is below the visualizer */
+/* Add curved edges to the video */
+.curved-video {
+    border-radius: 20px; /* Adjust for more or less curve */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4); /* Optional: add shadow for depth */
+    width: 100%;
+    max-width: 700px; /* Ensure the video does not exceed this width */
+    height: auto; /* Maintain the aspect ratio */
 }
+
 
 
 /* Base styles for the table */

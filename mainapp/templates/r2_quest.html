@@ -92,26 +92,31 @@
             {% elif crr == "ans" %}
                 <div class="feedback">
                     {% if check == 1 %}
-                        <p class="correct-answer">Correct Answer!</p>
-                        <div class="round-container">
-                            <video id="nahi" width="1700" autoplay muted>
-                                <source src="{% static 'vid/noice.mp4' %}" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
-                        <p class="correct-answer">{{ans}}</p>
+    <p class="correct-answer">Correct Answer!</p>
+    <div class="video-container">
+        <div class="video-container">
+    <video id="result-video" class="curved-video" width="800" height="360" autoplay>
+        <source src="{% static 'vid/noice.mp4' %}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
 
-                    {% elif check == 0 %}
-                        <p class="wrong-answer">Wrong Answer!</p>
-                        <div class="round-container">
-                            <video id="nahi" width="1700" autoplay muted>
-                                <source src="{% static 'vid/nahi.mp4' %}" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
-                        <p class="correct-answer">{{ans}}</p>
+    </div>
+    
+    <p class="correct-answer">{{ ans }}</p>
+{% elif check == 0 %}
+    <p class="wrong-answer">Wrong Answer!</p>
+    <div class="video-container">
+    <video id="result-video" class="curved-video" width="800" height="360" autoplay>
+        <source src="{% static 'vid/nahi.mp4' %}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
 
-                    {% endif %}
+    
+    <p class="correct-answer">{{ ans }}</p>
+{% endif %}
+
                 </div>
                 
             {% endif %}
