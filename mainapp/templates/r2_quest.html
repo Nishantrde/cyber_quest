@@ -94,7 +94,7 @@
                     {% if check == 1 %}
                         <p class="correct-answer">Correct Answer!</p>
                         <div class="round-container">
-                            <video id="nahi" width="1700" autoplay>
+                            <video id="nahi" width="1700" autoplay muted>
                                 <source src="{% static 'vid/noice.mp4' %}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
@@ -104,7 +104,7 @@
                     {% elif check == 0 %}
                         <p class="wrong-answer">Wrong Answer!</p>
                         <div class="round-container">
-                            <video id="nahi" width="1700" autoplay>
+                            <video id="nahi" width="1700" autoplay muted>
                                 <source src="{% static 'vid/nahi.mp4' %}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
