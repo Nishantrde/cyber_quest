@@ -25,6 +25,15 @@ def r2(request):
     print(type(rounds.rules))
     return render(request, "r2.html", {"rounds": rounds.rules})
 
+
+def r3_elemator(request):
+    elemeted_team = list(tm.objects.filter(spec=False).order_by('score'))[::-1][-1]
+    print(elemeted_team)
+    return render(request, "r3_ele.html", {"team":elemeted_team})
+
+def r3(request):
+    return render(request, "r3.html", )
+
 def r2_quest(request, id, team_id):
     
     quests = list(qr2.objects.all().order_by('qes_id'))
@@ -114,7 +123,7 @@ def r2_quest(request, id, team_id):
         
         print(inp)
         if id>11:
-            return redirect("/graph/r3")
+            return redirect("/graph/r3_ele")
         print(quests[id].ans)
     
     return render(request, 'r2_quest.html', {

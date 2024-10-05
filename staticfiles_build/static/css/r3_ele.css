@@ -1,0 +1,96 @@
+/* Reset default margins/paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0d0d0d, #1a1a1a); /* Gradient for depth */
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    text-align: center;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Team container styling */
+.team-container {
+    margin-bottom: 30px;
+}
+
+/* Enhanced animated heading */
+.animated-heading {
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: 5px;
+    background: linear-gradient(135deg, #e63946, #ffcc00); /* Gradient text */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: glow 1.5s ease-in-out infinite alternate;
+    text-shadow: 0px 4px 10px rgba(230, 57, 70, 0.75); /* Soft shadow for 3D effect */
+}
+
+/* Glowing animation for heading */
+@keyframes glow {
+    from {
+        text-shadow: 0px 4px 10px rgba(230, 57, 70, 0.75), 0 0 20px rgba(255, 204, 0, 0.5);
+    }
+    to {
+        text-shadow: 0px 4px 20px rgba(230, 57, 70, 1), 0 0 40px rgba(255, 204, 0, 1);
+    }
+}
+
+/* Video wrapper exact dimensions */
+.video-wrapper {
+    border-radius: 20px; 
+    background: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#result-video {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px; 
+    border: 4px solid #e63946; 
+    box-shadow: 0 4px 20px rgba(230, 57, 70, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect on video */
+#result-video:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 40px rgba(230, 57, 70, 0.8);
+}
+
+/* Fade-in animation */
+@keyframes fadeInText {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Press enter hint */
+.enter-hint {
+    margin-top: 15px;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #e63946;
+    opacity: 0.85;
+    animation: hintPulse 2s ease-in-out infinite alternate;
+}
+
+/* Hint pulse animation */
+@keyframes hintPulse {
+    from { opacity: 0.7; }
+    to { opacity: 1; }
+}
