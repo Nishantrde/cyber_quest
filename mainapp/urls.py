@@ -9,6 +9,7 @@ urlpatterns = [
     path("r2", r2),
     path("r3", r3),
     path("r3_ele", r3_elemator),
+    path("r3_quest/<int:id>", r3_quest),
     path("r2_quest/<int:id>/<int:team_id>", r2_quest),
     path("r1_quest", r1_quest),
     path("graph/<str:id>", graph),

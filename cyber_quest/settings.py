@@ -96,7 +96,7 @@ CHANNEL_LAYERS = {
 # Database configuration
 DATABASES = {
     'default': dj_database_url.parse(
-        "postgresql://cyber4719_user:JEZfyCMcTwFwaMDS0ZCQ1ImshOkgvFBX@dpg-crsf1fu8ii6s73ed0hfg-a.singapore-postgres.render.com/cyber4719"
+        "postgresql://cyber_quest_user:LbzjLZ3LHAI4x3QwRDmSaPZcJAgk80f7@dpg-cs13usu8ii6s73cv6dq0-a.singapore-postgres.render.com/cyber_quest"
     )
 }
 

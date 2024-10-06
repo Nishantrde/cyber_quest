@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from .models import Quest_round1 as qr
 from .models import Quest_round2 as qr2
+from .models import Quest_round3 as qr3
 from .models import Rounds as rd
-from .models import Team as tm
+from .models import Tea_m as tm
+from .models import Dugout as dg
 
 def index(request):
     return render(request, "index.html")
@@ -28,11 +30,21 @@ def r2(request):
 
 def r3_elemator(request):
     elemeted_team = list(tm.objects.filter(spec=False).order_by('score'))[::-1][-1]
+    if not dg.objects.filter(teams = elemeted_team).exists():
+        obj = dg.objects.create(teams = elemeted_team)
+        obj.save()
     print(elemeted_team)
     return render(request, "r3_ele.html", {"team":elemeted_team})
 
 def r3(request):
-    return render(request, "r3.html", )
+    rounds = rd.objects.filter(round="round3").first()
+    print(type(rounds.rules))
+    return render(request, "r3.html", {"rounds": rounds.rules})
+
+def r3_quest(request, id):
+    quest = qr3.objects.all()
+    teams = list(tm.objects.filter(spec=False).order_by('score'))[::-1]
+    return render(request, "r3_quest.html", {"teams":teams, })
 
 def r2_quest(request, id, team_id):
     
@@ -65,12 +77,12 @@ def r2_quest(request, id, team_id):
             ans = quests[id].option1
             if check == 1:
                 
-                team = tm.objects.get(id=team_id+1)  # Fetch the team
+                team = tm.objects.get(t_id=team_id+1)  # Fetch the team
                 team.score += quests[id].score
                 team.save()
                 print("score", team.score, team)
             else:
-                team = tm.objects.get(id=team_id+1)  # Fetch the team
+                team = tm.objects.get(t_id=team_id+1)  # Fetch the team
                 team.score -= quests[id].deduct
                 team.save()
                 print("score", team.score, team)
@@ -80,12 +92,12 @@ def r2_quest(request, id, team_id):
             ans = quests[id].option2
             if check == 1:
                 
-                team = tm.objects.get(id=team_id+1)  # Fetch the team
+                team = tm.objects.get(t_id=team_id+1)  # Fetch the team
                 team.score += quests[id].score
                 team.save()
                 print("score", team.score, team)
             else:
-                team = tm.objects.get(id=team_id+1)  # Fetch the team
+                team = tm.objects.get(t_id=team_id+1)  # Fetch the team
                 team.score -= quests[id].deduct
                 team.save()
                 print("score", team.score, team)
@@ -95,12 +107,12 @@ def r2_quest(request, id, team_id):
             ans = quests[id].option3
             if check == 1:
                 
-                team = tm.objects.get(id=team_id+1)  # Fetch the team
+                team = tm.objects.get(t_id=team_id+1)  # Fetch the team
                 team.score += quests[id].score
                 team.save()
                 print("score", team.score, team)
             else:
-                team = tm.objects.get(id=team_id+1)  # Fetch the team
+                team = tm.objects.get(t_id=team_id+1)  # Fetch the team
                 team.score -= quests[id].deduct
                 team.save()
                 print("score", team.score, team)
@@ -110,12 +122,12 @@ def r2_quest(request, id, team_id):
             ans = quests[id].option4
             if check == 1:
                 
-                team = tm.objects.get(id=team_id+1)  # Fetch the team
+                team = tm.objects.get(t_id=team_id+1)  # Fetch the team
                 team.score += quests[id].score
                 team.save()
                 print("score", team.score, team)
             else:
-                team = tm.objects.get(id=team_id+1)  # Fetch the team
+                team = tm.objects.get(t_id=team_id+1)  # Fetch the team
                 team.score -= quests[id].deduct
                 team.save()
                 print("score", team.score, team)
@@ -125,13 +137,13 @@ def r2_quest(request, id, team_id):
         if id>11:
             return redirect("/graph/r3_ele")
         print(quests[id].ans)
-    
+    print(team_id)
     return render(request, 'r2_quest.html', {
         "count": id,
         "quest": quests[id],
         "teams": list(tm.objects.filter(spec=False).order_by('score'))[::-1],
         "crr": crr,
-        "team":tm.objects.get(id=team_id+1),
+        "team":tm.objects.get(t_id=team_id+1),
         "team_id":team_id,
         "check": check,
         "ans": ans,  # Pass the correct answer option to the template
@@ -141,7 +153,7 @@ def r2_quest(request, id, team_id):
 
 def r1_quest(request):
     # Sort teams by their ID
-    teams = list(tm.objects.all().order_by('id'))[:-1]
+    teams = list(tm.objects.all().order_by('t_id'))[:-1]
     
     quests = qr.objects.all().order_by('qes_id')
     
@@ -191,7 +203,7 @@ def r1_quest(request):
             bnt = "ans"
 
             if request.POST.get("ans") == "y":
-                team = list(tm.objects.all().order_by('id'))[k]
+                team = list(tm.objects.all().order_by('t_id'))[k]
                 quest = quests[i]
                 print("score", team.score, quest.score)
                 if k == j:
@@ -235,7 +247,7 @@ def r1_quest(request):
                 team = teams[k]
             elif k == len(teams):
                 print(k)
-                team = list(tm.objects.all().order_by('id'))[len(teams)]
+                team = list(tm.objects.all().order_by('t_id'))[len(teams)]
                 
             else:
                 team = teams[k]
@@ -246,7 +258,7 @@ def r1_quest(request):
     return render(request, 'r1_quest.html', {
         "quest": quest,
         "teams": list(tm.objects.filter(spec=False).order_by('score'))[::-1],
-        "team": team, 
+        "team": team,
         "bnt": bnt, 
         "team_counter": j,
         "pass_counter": k,
@@ -266,7 +278,7 @@ def round_ws(request):
 
 def graph(request, id):
     # Fetch all team objects from the database
-    teams = tm.objects.all().order_by('id')
+    teams = tm.objects.all().order_by('t_id')
 
     # Prepare the team names and scores
     categories = [team.team_name for team in teams]

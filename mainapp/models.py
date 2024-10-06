@@ -1,15 +1,17 @@
 from django.db import models
 
-class Team(models.Model):
+class Tea_m(models.Model):
+    t_id = models.IntegerField(default=0)
     team_name = models.CharField(default = "",max_length=250)
     score = models.IntegerField(default=0)
     spec = models.BooleanField(default=False)
+    
 
     def __str__(self):
         return f"{self.team_name}"
 
 class Dugout(models.Model):
-    teams = models.ForeignKey(Team , on_delete=models.CASCADE)
+    teams = models.ForeignKey(Tea_m , on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.teams}"
 
@@ -17,7 +19,8 @@ class Rounds(models.Model):
     round_name = models.CharField(default = "", max_length=250)
     rules = models.JSONField(default=list)
     round = models.CharField(default="", max_length=250)
-    
+    timer = models.IntegerField(default=0)
+
     def __str__(self):
         return f"{self.round_name}"
 

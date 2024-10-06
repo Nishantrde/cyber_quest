@@ -1,0 +1,431 @@
+{
+    "Dugout": [
+        {
+            "id": 5,
+            "teams_id": 1
+        }
+    ],
+    "Rounds": [
+        {
+            "id": 1,
+            "round_name": "Disclaimer",
+            "rules": [
+                "The audience is requested to maintain silence throughout the event.",
+                "There should be no shouting or howling at any time of the event.",
+                "If you know the answer, please do not shout out or attempt to give hints to the participants.",
+                "Feel free to applaud and encourage the teams after each round, but wait until the round is over.",
+                "The participants are requested not to go for any unfair means, if caught there will be an instant disqualification.",
+                "If a question is unclear, ask immediately. No clarifications will be given once the timer begins."
+            ],
+            "round": "disclaimer",
+            "timer": 0
+        },
+        {
+            "id": 6,
+            "round_name": "Round 4",
+            "rules": [
+                "There will be 8 questions in total, 2 for each team.",
+                "30 points will be awarded for every correct answer.",
+                "30 points will be deducted for every wrong answer and not attempting a question.",
+                "There is no passing in this round.",
+                "30 seconds will be given for answering each question."
+            ],
+            "round": "round4",
+            "timer": 0
+        },
+        {
+            "id": 7,
+            "round_name": "Round 5",
+            "rules": [
+                "Each team will be asked 10 questions.",
+                "10 points will be awarded for every correct answer.",
+                "5 points will be deducted for every wrong answer.",
+                "If you do not know the answer to any question, you can pass the question, but 5 marks will be deducted for not attempting the question.",
+                "You will have 60 seconds to answer all the questions."
+            ],
+            "round": "round5",
+            "timer": 0
+        },
+        {
+            "id": 4,
+            "round_name": "Round 3",
+            "rules": [
+                "There will be 8 questions in total.",
+                "aisnawknj"
+            ],
+            "round": "round3",
+            "timer": 0
+        },
+        {
+            "id": 2,
+            "round_name": "Round 1",
+            "rules": [
+                "There will be 12 questions in total, 2 for each team",
+                "10 points will be awarded for every correct answer.",
+                "There is no negative marking in this round.",
+                "Questions can be passed, the team answering a passed question will be awarded 5 points.",
+                "If none of the teams are able to answer a question, it will be passed to the audience, who will be awarded a +5 for a correct answer as well.",
+                "There are no eliminations in this round.",
+                "25 seconds will be given to answer each question."
+            ],
+            "round": "round1",
+            "timer": 25
+        },
+        {
+            "id": 3,
+            "round_name": "Round 2",
+            "rules": [
+                "There will be 12 questions in total, 2 for each team.",
+                "20 points will be awarded for every correct answer.",
+                "10 points will be deducted for every wrong answer or for not attempting a question.",
+                "The questions cannot be passed.",
+                "The team with the lowest score will be eliminated.",
+                "15 seconds will be given to answer each question."
+            ],
+            "round": "round2",
+            "timer": 15
+        }
+    ],
+    "Quest_round1": [
+        {
+            "id": 1,
+            "qes_id": 10,
+            "quest": "What is the term for a unique identifier assigned to a network interface for communications on the physical network segment?",
+            "score": 10,
+            "pass_score": 5,
+            "ans": "MAC address"
+        },
+        {
+            "id": 3,
+            "qes_id": 12,
+            "quest": "What is the default port number for HTTP?",
+            "score": 10,
+            "pass_score": 5,
+            "ans": "80"
+        },
+        {
+            "id": 2,
+            "qes_id": 5,
+            "quest": "Which file system is primarily used in Windows operating systems?",
+            "score": 10,
+            "pass_score": 5,
+            "ans": "NTFS (New Technology File System)"
+        },
+        {
+            "id": 4,
+            "qes_id": 3,
+            "quest": "What is the full form of GPT in ChatGPT?",
+            "score": 10,
+            "pass_score": 5,
+            "ans": "Generative Pre-trained Transformer"
+        },
+        {
+            "id": 5,
+            "qes_id": 9,
+            "quest": "What is the standard IP address for a local loopback connection?",
+            "score": 10,
+            "pass_score": 5,
+            "ans": "127.0.0.1"
+        },
+        {
+            "id": 6,
+            "qes_id": 7,
+            "quest": "Which company developed the first graphical web browser, called Mosaic?",
+            "score": 10,
+            "pass_score": 5,
+            "ans": "NCSA (National Centre for Supercomputing Applications)"
+        },
+        {
+            "id": 7,
+            "qes_id": 6,
+            "quest": "What is the term for the main directory of a file system?",
+            "score": 10,
+            "pass_score": 5,
+            "ans": "Root directory"
+        },
+        {
+            "id": 8,
+            "qes_id": 4,
+            "quest": "What does \"MIME\" stand for in email technology?",
+            "score": 10,
+            "pass_score": 5,
+            "ans": "Multipurpose Internet Mail Extensions"
+        },
+        {
+            "id": 9,
+            "qes_id": 2,
+            "quest": "What is the process called when a computer reboots without completely turning off the power?",
+            "score": 10,
+            "pass_score": 5,
+            "ans": "Warm Boot"
+        },
+        {
+            "id": 10,
+            "qes_id": 11,
+            "quest": "What does \"P2P\" stand for in networking?",
+            "score": 10,
+            "pass_score": 5,
+            "ans": "Peer-to-Peer"
+        },
+        {
+            "id": 11,
+            "qes_id": 1,
+            "quest": "What does \"HTTP 500\" indicate?",
+            "score": 10,
+            "pass_score": 5,
+            "ans": "Internal Server Error"
+        },
+        {
+            "id": 12,
+            "qes_id": 8,
+            "quest": "What is the term for a network device that amplifies and retransmits signals?",
+            "score": 10,
+            "pass_score": 5,
+            "ans": "Repeater"
+        }
+    ],
+    "Quest_round2": [
+        {
+            "id": 30,
+            "qes_id": 8,
+            "quest": "Which of the following is a common method for ensuring data integrity?",
+            "ans": 2,
+            "option1": "Data Encryption",
+            "option2": "Digital Signatures",
+            "option3": "Data Compression",
+            "option4": "Data Duplication",
+            "score": 20,
+            "deduct": 10
+        },
+        {
+            "id": 31,
+            "qes_id": 4,
+            "quest": "What is the purpose of the try...except block in Python?",
+            "ans": 4,
+            "option1": "To create loops",
+            "option2": "To define functions",
+            "option3": "To declare variables",
+            "option4": "To handle exceptions and errors",
+            "score": 20,
+            "deduct": 10
+        },
+        {
+            "id": 32,
+            "qes_id": 11,
+            "quest": "What does the term \"data mining\" refer to?",
+            "ans": 3,
+            "option1": "The process of backing up data",
+            "option2": "The process of storing data",
+            "option3": "The process of analyzing data to find patterns",
+            "option4": "The process of encrypting data",
+            "score": 20,
+            "deduct": 10
+        },
+        {
+            "id": 33,
+            "qes_id": 9,
+            "quest": "Which of the following is used to manage access control in a database?",
+            "ans": 4,
+            "option1": "Primary Key",
+            "option2": "Foreign Key",
+            "option3": "Index",
+            "option4": "User Roles",
+            "score": 20,
+            "deduct": 10
+        },
+        {
+            "id": 34,
+            "qes_id": 1,
+            "quest": "In networking, what does NAT stand for?",
+            "ans": 4,
+            "option1": "Network Authentication Tool",
+            "option2": "Network Application Transfer",
+            "option3": "Network Access Technology",
+            "option4": "Network Address Translation",
+            "score": 20,
+            "deduct": 10
+        },
+        {
+            "id": 35,
+            "qes_id": 12,
+            "quest": "What is the maximum length of an IPv4 address?",
+            "ans": 1,
+            "option1": "32 bits",
+            "option2": "64 bits",
+            "option3": "128 bits",
+            "option4": "256 bits",
+            "score": 20,
+            "deduct": 10
+        },
+        {
+            "id": 36,
+            "qes_id": 5,
+            "quest": "What is a \"buffer overflow\" attack?",
+            "ans": 3,
+            "option1": "An attack that floods a network",
+            "option2": "An attack that intercepts data",
+            "option3": "An attack that exploits a program's memory management",
+            "option4": "An attack that encrypts data",
+            "score": 20,
+            "deduct": 10
+        },
+        {
+            "id": 29,
+            "qes_id": 2,
+            "quest": "Which command is used to compile a C program?",
+            "ans": 3,
+            "option1": "run",
+            "option2": "build",
+            "option3": "gcc",
+            "option4": "execute",
+            "score": 20,
+            "deduct": 10
+        },
+        {
+            "id": 25,
+            "qes_id": 7,
+            "quest": "What is the purpose of a \"SELECT\" statement in SQL?",
+            "ans": 3,
+            "option1": "To delete data from a table",
+            "option2": "To insert new data into a table",
+            "option3": "To retrieve data from a database",
+            "option4": "To update existing data in a table",
+            "score": 20,
+            "deduct": 10
+        },
+        {
+            "id": 26,
+            "qes_id": 6,
+            "quest": "Which of the following correctly represents binary addition?",
+            "ans": 2,
+            "option1": "1 + 1 = 2",
+            "option2": "1 + 1 = 10",
+            "option3": "1 + 1 = 0",
+            "option4": "1 + 1 = 11",
+            "score": 20,
+            "deduct": 10
+        },
+        {
+            "id": 27,
+            "qes_id": 3,
+            "quest": "Which programming language is known for its extensive use in web development for both client-side and server-side programming?",
+            "ans": 3,
+            "option1": "C++",
+            "option2": "Java",
+            "option3": "JavaScript",
+            "option4": "SQL",
+            "score": 20,
+            "deduct": 10
+        },
+        {
+            "id": 28,
+            "qes_id": 10,
+            "quest": "Which of the following describes a DDoS (Distributed Denial of Service) attack?",
+            "ans": 1,
+            "option1": "Overloading a server with multiple requests from different sources",
+            "option2": "Infecting a system with a virus",
+            "option3": "Encrypting data for ransom",
+            "option4": "Stealing sensitive data from a website",
+            "score": 20,
+            "deduct": 10
+        }
+    ],
+    "Quest_round3": [
+        {
+            "id": 1,
+            "qes_id": 1,
+            "quest": "In 2023, which company faced a major data breach affecting millions of user's personal information ?",
+            "ans": 2,
+            "option1": "Yahoo",
+            "option2": "LinkedIn",
+            "option3": "Capital One",
+            "option4": "Target",
+            "score": 50,
+            "deduct": 20
+        },
+        {
+            "id": 2,
+            "qes_id": 2,
+            "quest": "In which year was the first iPhone released ?",
+            "ans": 3,
+            "option1": "2005",
+            "option2": "2010",
+            "option3": "2007",
+            "option4": "2012",
+            "score": 50,
+            "deduct": 20
+        },
+        {
+            "id": 3,
+            "qes_id": 3,
+            "quest": "What does \"SSH\" stand for ?",
+            "ans": 4,
+            "option1": "Simple Socket Host",
+            "option2": "Standard Secure Host",
+            "option3": "Secure System Hub",
+            "option4": "Secure Shell",
+            "score": 50,
+            "deduct": 20
+        },
+        {
+            "id": 4,
+            "qes_id": 4,
+            "quest": "Which online payment system was acquired by eBay in 2002 ?",
+            "ans": 1,
+            "option1": "PayPal",
+            "option2": "Stripe",
+            "option3": "Venmo",
+            "option4": "Square",
+            "score": 50,
+            "deduct": 20
+        },
+        {
+            "id": 5,
+            "qes_id": 5,
+            "quest": "What is the escape sequence of carriage return in C# ?",
+            "ans": 4,
+            "option1": "/v",
+            "option2": "/b",
+            "option3": "/cr",
+            "option4": "/r",
+            "score": 50,
+            "deduct": 20
+        },
+        {
+            "id": 6,
+            "qes_id": 6,
+            "quest": "Which of the following is the fastest type of computer memory ?",
+            "ans": 3,
+            "option1": "SSD",
+            "option2": "RAM",
+            "option3": "Cache",
+            "option4": "HDD",
+            "score": 50,
+            "deduct": 20
+        },
+        {
+            "id": 7,
+            "qes_id": 7,
+            "quest": "In which year was the first email sent ?",
+            "ans": 1,
+            "option1": "1971",
+            "option2": "1983",
+            "option3": "1995",
+            "option4": "2001",
+            "score": 50,
+            "deduct": 20
+        },
+        {
+            "id": 8,
+            "qes_id": 8,
+            "quest": "Which of the following options is not present in the Home Tab of MS Access ?",
+            "ans": 2,
+            "option1": "View",
+            "option2": "Table",
+            "option3": "Remove Sort",
+            "option4": "Find",
+            "score": 50,
+            "deduct": 20
+        }
+    ]
+}
