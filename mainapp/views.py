@@ -41,10 +41,15 @@ def r3(request):
     print(type(rounds.rules))
     return render(request, "r3.html", {"rounds": rounds.rules})
 
-def r3_quest(request, id):
-    quest = qr3.objects.all()
+def r3_quest_lrbd(request, id):
+    quest = qr3.objects.filter(qes_id = id).first()
     teams = list(tm.objects.filter(spec=False).order_by('score'))[::-1]
-    return render(request, "r3_quest.html", {"teams":teams, })
+    return render(request, "r3_quest_lrbd.html", {"teams":teams,"quest":quest, "count":id+1, "counter":id})
+
+def r3_quest(request, team):
+    tea_m = tm.objects.filter(t_id = team).first()
+    teams = list(tm.objects.filter(spec=False).order_by('score'))[::-1]
+    return render(request, "r3_quest.html", {"teams":teams, "team":tea_m})
 
 def r2_quest(request, id, team_id):
     

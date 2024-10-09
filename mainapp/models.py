@@ -11,7 +11,7 @@ class Tea_m(models.Model):
         return f"{self.team_name}"
 
 class Dugout(models.Model):
-    teams = models.ForeignKey(Tea_m , on_delete=models.CASCADE)
+    teams = models.ForeignKey(Tea_m, on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.teams}"
 

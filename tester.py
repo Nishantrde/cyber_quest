@@ -3,30 +3,31 @@ import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cyber_quest.settings')
 import django
 django.setup()
-from mainapp.models import Tea_m as tm
+from mainapp.models import *
+with open('data_backup.json', 'r') as file:
+    data = json.load(file)
 
+dat = data["Quest_round3"]
 
-team_names = [
-    "Hex Hackers",
-    "Interface Innovators",
-    "Ping Prophets",
-    "Kernel Kings",
-    "Exception Executors",
-    "Script Shifters"
-]
+# for i in dat:
+#     print(i)
+#     obj = Rounds.objects.create(
+#         round_name = i["round_name"],
+#         rules = i["rules"],
+#         round = i["round"],
+#         timer = i["timer"]
+#         )
+# for i in dat:
+#     print(i)
+#     obj = Quest_round3.objects.create(
+#         qes_id = i["qes_id"],
+#         quest = i["quest"],
+#         ans = i["ans"],
+#         option1 = i["option1"],
+#         option2 = i["option2"],
+#         option3 = i["option3"],
+#         option4 = i["option4"],
+#         )
 
-for i in range(len(team_names)):
-    print(i)
-    ob = tm.objects.create(
-        t_id = i,
-        team_name = team_names[i]
-        )
-    ob.save()
-ob = tm.objects.create(
-        t_id = 6,
-        team_name = "spec",
-        spec = True
-        )
-ob.save()
 # Now you can access the data
 # print(data["Rounds"])

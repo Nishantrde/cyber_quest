@@ -25,64 +25,165 @@
             border: 2px solid #0000ff;
         }
 
+        /* Timer styling */
+        #timer {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px;
+        }
+
         /* Other CSS */
     </style>
     <link rel="stylesheet" type="text/css" href="{% static 'css/r3_quest.css' %}">
 </head>
 <body>
 
+    <div id="quest"></div>
+    <div id="timer">10.000</div> <!-- Timer display with three decimal places -->
 
     <form id="form">
-        <button type="button" onclick="sendMessage(1)">A. Option 1</button>
-        <button type="button" onclick="sendMessage(2)">B. Option 2</button>
-        <button type="button" onclick="sendMessage(3)">C. Option 3</button>
-        <button type="button" onclick="sendMessage(4)">D. Option 4</button>
+        <button type="button" onclick="sendMessage(1)"><div id="option1"></div></button>
+            
+        <button type="button" onclick="sendMessage(2)"><div id="option2"></div></button>
+            
+        <button type="button" onclick="sendMessage(3)"><div id="option3"></div></button>
+            
+        <button type="button" onclick="sendMessage(4)"><div id="option4"></div></button>
+    
     </form>
 
     <div id="messages"></div>
 
     <script type="text/javascript">
-        let url = `ws://${window.location.host}/ws/socket-server/`
+        let url = `ws://${window.location.host}/ws/socket-server/`;
+        const chatSocket = new WebSocket(url);
+        let permit = false;
+        let countdown;
+        let timeLeft = 10.000; // Start countdown from 10 seconds
+        let isDisconnected = false; // Flag to track if WebSocket is already disconnected
+        
+        function clearMessages() {
+            document.getElementById("messages").innerHTML = ''; // Clears all messages
+        }
 
-        const chatSocket = new WebSocket(url)
+        // Timer logic with milliseconds
+        function startTimer() {
+            const interval = 10; // Interval in milliseconds (0.01 seconds)
+            countdown = setInterval(() => {
+                timeLeft -= interval / 1000; // Subtract 0.01 seconds from timeLeft
+                document.getElementById("timer").innerText = timeLeft.toFixed(3); // Show time with 3 decimal places
+    
+                // If time runs out, stop the timer and disconnect
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    document.getElementById("timer").innerText = "0.000"; // Display "0.000" when time runs out
+                    sendMessage(0);  // Send message indicating time's up
+                    permit = false;
+                }
+            }, interval);
+        }
+    
+        // Disconnect WebSocket
+        function disconnectSocket() {
+            if (!isDisconnected) {
+                chatSocket.close(); // Close the WebSocket connection
+                isDisconnected = true; // Set flag to avoid multiple closures
+            }
+        }
+        
+        function clearMessages() {
+            document.getElementById("messages").innerHTML = ''; // Clears all messages
+            document.getElementById('quest').innerHTML = '';
+            document.getElementById('option1').innerHTML = '';
+            document.getElementById('option2').innerHTML = '';
+            document.getElementById('option3').innerHTML = '';
+            document.getElementById('option4').innerHTML = '';
+        }
 
-        chatSocket.onmessage = function(e){
-            let data = JSON.parse(e.data)
-            console.log('Data:', data)
-
+        chatSocket.onmessage = function(e) {
+            let data = JSON.parse(e.data);
+            console.log('Data:', data);
+    
+            // Check if data.play is true to start the timer
+            if (data.play === true) {
+                startTimer();
+                permit = true;
+                timeLeft = 10.000;
+                clearMessages();
+            }
+    
             if(data.type === 'chat'){
-                let messages = document.getElementById('messages')
-
-                messages.insertAdjacentHTML('beforeend', `<div>
-                                        <p>${data.message}</p>
-                                    </div>`)
+                if(data.option1!=undefined){
+                console.log(data.option)
+                let messages = document.getElementById('messages');
+                let quest = document.getElementById('quest');
+                let option1 = document.getElementById('option1');
+                let option2 = document.getElementById('option2');
+                let option3 = document.getElementById('option3');
+                let option4 = document.getElementById('option4');
+                if(data.message!=undefined){
+                messages.insertAdjacentHTML('beforeend', `<div><p>${data.message}</p></div>`);
+                }
+                quest.insertAdjacentHTML('beforeend', `<div><p>${data.quest}</p></div>`);
+                option1.insertAdjacentHTML('beforeend', `<div><p>${data.option1}</p></div>`);
+                option2.insertAdjacentHTML('beforeend', `<div><p>${data.option2}</p></div>`);
+                option3.insertAdjacentHTML('beforeend', `<div><p>${data.option3}</p></div>`);
+                option4.insertAdjacentHTML('beforeend', `<div><p>${data.option4}</p></div>`);
             }
-        }
+                else{
+                    messages.insertAdjacentHTML('beforeend', `<div><p>${data.message}</p></div>`);
 
+                }
+            }
+            
+        };
+    
         function sendMessage(option) {
-            let message;
-            switch (option) {
-                case 1:
-                    message = "A. Option 1";
-                    break;
-                case 2:
-                    message = "B. Option 2";
-                    break;
-                case 3:
-                    message = "C. Option 3";
-                    break;
-                case 4:
-                    message = "D. Option 4";
-                    break;
-                default:
-                    message = "Unknown option";
+            if (!isDisconnected && permit == true) {
+                clearInterval(countdown); // Stop the timer when an option is chosen
+    
+                let message;
+                switch (option) {
+                    case 1:
+                        message = "A. Option 1";
+                        break;
+                    case 2:
+                        message = "B. Option 2";
+                        break;
+                    case 3:
+                        message = "C. Option 3";
+                        break;
+                    case 4:
+                        message = "D. Option 4";
+                        break;
+                    case 0:
+                        message = "Time's up!";
+                        break;
+                    default:
+                        message = "Unknown option";
+                }
+    
+                let tm = "{{team}}"; // Assuming this is set dynamically in your Django template
+    
+                chatSocket.send(JSON.stringify({
+                    'message': message,
+                    'team': tm,
+                    'time': timeLeft.toFixed(3)  // Send the remaining time with 3 decimal places
+                }));
+                permit = false;
             }
-
-            chatSocket.send(JSON.stringify({
-                'message': message
-            }));
         }
-
+    
+        // Start the timer when the page loads
+        window.onload = function() {
+            // Timer starts automatically based on WebSocket message
+        };
+    
+        // WebSocket on close event (optional for cleanup)
+        chatSocket.onclose = function(e) {
+            console.log('WebSocket closed:', e);
+        };
     </script>
+    
 </body>
 </html>
