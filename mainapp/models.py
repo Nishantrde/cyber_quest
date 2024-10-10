@@ -8,7 +8,7 @@ class Tea_m(models.Model):
     
 
     def __str__(self):
-        return f"{self.team_name}"
+        return f"{self.team_name} {self.score}"
 
 class Dugout(models.Model):
     teams = models.ForeignKey(Tea_m, on_delete=models.CASCADE)
@@ -57,6 +57,16 @@ class Quest_round3(models.Model):
     option2 = models.CharField(default = "",max_length=100)
     option3 = models.CharField(default = "",max_length=100)
     option4 = models.CharField(default= "",max_length=100)
+    score = models.IntegerField(default=50)
+    deduct =  models.IntegerField(default=20)   
+
+    def __str__(self):
+        return self.quest
+
+class Quest_round4(models.Model):
+    qes_id = models.IntegerField(default = 0)
+    quest = models.CharField(max_length=255)
+    ans = models.CharField(default = "",max_length=100)
     score = models.IntegerField(default=50)
     deduct =  models.IntegerField(default=20)   
 

@@ -27,7 +27,6 @@ def r2(request):
     print(type(rounds.rules))
     return render(request, "r2.html", {"rounds": rounds.rules})
 
-
 def r3_elemator(request):
     elemeted_team = list(tm.objects.filter(spec=False).order_by('score'))[::-1][-1]
     if not dg.objects.filter(teams = elemeted_team).exists():

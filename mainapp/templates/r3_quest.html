@@ -55,6 +55,7 @@
     <div id="messages"></div>
 
     <script type="text/javascript">
+        let cnt = 0;
         let url = `ws://${window.location.host}/ws/socket-server/`;
         const chatSocket = new WebSocket(url);
         let permit = false;
@@ -124,6 +125,8 @@
                 if(data.message!=undefined){
                 messages.insertAdjacentHTML('beforeend', `<div><p>${data.message}</p></div>`);
                 }
+                cnt = data.counter;
+                console.log("here", cnt, data);
                 quest.insertAdjacentHTML('beforeend', `<div><p>${data.quest}</p></div>`);
                 option1.insertAdjacentHTML('beforeend', `<div><p>${data.option1}</p></div>`);
                 option2.insertAdjacentHTML('beforeend', `<div><p>${data.option2}</p></div>`);
@@ -163,11 +166,13 @@
                         message = "Unknown option";
                 }
     
-                let tm = "{{team}}"; // Assuming this is set dynamically in your Django template
+                let tm = "{{team.team_name}}"; // Assuming this is set dynamically in your Django template
     
                 chatSocket.send(JSON.stringify({
                     'message': message,
                     'team': tm,
+                    'option':option,
+                    'cnt':cnt,
                     'time': timeLeft.toFixed(3)  // Send the remaining time with 3 decimal places
                 }));
                 permit = false;

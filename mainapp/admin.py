@@ -8,5 +8,7 @@ admin.site.register(Dugout)
 admin.site.register(Quest_round1)
 admin.site.register(Quest_round2)
 admin.site.register(Quest_round3)
+admin.site.register(Quest_round4)
+
 
 
