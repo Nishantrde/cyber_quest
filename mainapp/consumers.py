@@ -20,7 +20,7 @@ class ChatConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         if text_data_json['message'] == "kernel":
             play = text_data_json['play']
-            print(text_data_json['counter'])
+            # print(text_data_json['counter'])
             async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {

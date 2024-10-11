@@ -131,19 +131,18 @@
                     'message': "kernel",
                     'play': true,
                     'quest': `{{quest}}`,
-                    'counter':`{{counter}}`,
                     'option1': '{{quest.option1}}',
                     'option2': '{{quest.option2}}',
                     'option3': '{{quest.option3}}',
                     'option4': '{{quest.option4}}',
+                    'counter': '{{counter}}'
                 }));
                 clearMessages();
-                // console.log(`{{counter}}`);
             }
 
             if (event.code === 'Enter') {
-    window.location.href = `/r3_quest_lrbd/{{count}}`;
-}
+                window.location.href = `/r3_quest_lrbd/{{count}}`;
+            }
 
         });
 
@@ -152,7 +151,7 @@
             let messages = document.getElementById('messages');
             if (data.team !== undefined) {
                 let tm = data.time;
-                messages.insertAdjacentHTML('beforeend', `<div><p>${data.team} ${data.message} ${(10.0 - tm).toFixed(3)} ${data.score}</p></div>`);
+                messages.insertAdjacentHTML('beforeend', `<div><p>${data.team} ${(10.0 - tm).toFixed(3)}</p></div>`);
             }
         };
 
