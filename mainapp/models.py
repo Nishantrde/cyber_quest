@@ -67,6 +67,7 @@ class Quest_round4(models.Model):
     qes_id = models.IntegerField(default = 0)
     quest = models.CharField(max_length=255)
     ans = models.CharField(default = "",max_length=100)
+    media_url = models.URLField(default="")
     score = models.IntegerField(default=50)
     deduct =  models.IntegerField(default=20)   
 

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+import json
 from .models import Quest_round1 as qr
 from .models import Quest_round2 as qr2
 from .models import Quest_round3 as qr3
@@ -41,6 +42,28 @@ def r3(request):
     return render(request, "r3.html", {"rounds": rounds.rules})
 
 def r3_quest_lrbd(request, id):
+    if request.method == "POST":
+        pro_lst = request.POST.get("pro_lst")
+        pro_lst = list(json.loads(pro_lst))
+        dep_lst = request.POST.get("dep_lst")
+        dep_lst = list(json.loads(dep_lst))
+        i = 0
+        print(pro_lst)
+        if len(pro_lst)!=0:
+            print("here", pro_lst)
+            for lst in pro_lst:
+                print(lst)
+                team = tm.objects.filter(team_name=lst["team"]).first()
+                team.score += 50 - i
+                team.save()
+                i += 10
+        else:
+            for lst in dep_lst:
+                print(lst)
+                team = tm.objects.filter(team_name=lst["team"]).first()
+                team.score -= 20
+                team.save()
+        
     quest = qr3.objects.filter(qes_id = id).first()
     teams = list(tm.objects.filter(spec=False).order_by('score'))[::-1]
     return render(request, "r3_quest_lrbd.html", {"teams":teams,"quest":quest, "count":id+1, "counter":id})

@@ -8,7 +8,7 @@
     {% load static %}
     <style>
         body {
-            background-image: url("{% static 'img/r3_bg.jpg' %}");
+            background-image: url("https://res.cloudinary.com/dwfdyavop/image/upload/v1728701605/r3_bg_rwkndx.jpg");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -66,7 +66,21 @@
     <div class="progress-bar">
         <div class="progress" id="progress"></div>
     </div>
+
+    <form method="post" id="quiz-form" action="/r3_quest_lrbd/{{count}}">
+        {% csrf_token %}
+        <input type="hidden" name="pro_lst" id="pro_lst" value="">
+        <input type="hidden" name="dep_lst" id="dep_lst" value="">
+
+        </form>
+
     <script type="text/javascript">
+        const form = document.getElementById('quiz-form');
+        const ProInput = document.getElementById('pro_lst');
+        const DepInput = document.getElementById('dep_lst');
+
+        let pro_lst = [];
+        let dep_lst = [];
         // Timer and progress logic here...
         const progressBar = document.getElementById('progress');
             const totalQuestions = 8;
@@ -141,7 +155,10 @@
             }
 
             if (event.code === 'Enter') {
-                window.location.href = `/r3_quest_lrbd/{{count}}`;
+                ProInput.value = JSON.stringify(pro_lst);  // Serialize pro_lst
+                DepInput.value = JSON.stringify(dep_lst);  // Serialize dep_lst
+                form.submit();
+                // window.location.href = `/r3_quest_lrbd/{{count}}`;
             }
 
         });
@@ -151,7 +168,13 @@
             let messages = document.getElementById('messages');
             if (data.team !== undefined) {
                 let tm = data.time;
-                messages.insertAdjacentHTML('beforeend', `<div><p>${data.team} ${(10.0 - tm).toFixed(3)}</p></div>`);
+                if(data.score>=0){
+                    pro_lst.push({"team":data.team, "time":tm})
+                }
+                else{
+                    dep_lst.push({"team":data.team})
+                }
+                messages.insertAdjacentHTML('beforeend', `<div><p>${data.team} ${(10.0 - tm).toFixed(3)}  ${data.score}</p></div>`);
             }
         };
 
