@@ -3,6 +3,7 @@ import json
 from .models import Quest_round1 as qr
 from .models import Quest_round2 as qr2
 from .models import Quest_round3 as qr3
+from .models import Quest_round4 as qr4
 from .models import Rounds as rd
 from .models import Tea_m as tm
 from .models import Dugout as dg
@@ -28,6 +29,54 @@ def r2(request):
     print(type(rounds.rules))
     return render(request, "r2.html", {"rounds": rounds.rules})
 
+def r3(request):
+    rounds = rd.objects.filter(round="round3").first()
+    print(type(rounds.rules))
+    return render(request, "r3.html", {"rounds": rounds.rules})
+
+def r4(request):
+    rounds = rd.objects.filter(round="round4").first()
+    print(type(rounds.rules))
+    return render(request, "r4.html", {"rounds": rounds.rules})
+
+def r4_quest(request, id, team):
+    ph = True if id <=4 else False
+    yt = True if not ph else False
+    print(ph, yt)
+    if request.method == "POST":
+        res = int(request.POST.get("inp"))
+        if res == 1:
+            obj = tm.objects.filter(t_id = team).first()
+            obj.score += qr4.objects.filter(qes_id = id).first().score
+            obj.save()
+        else:
+            obj = tm.objects.filter(t_id = team).first()
+            obj.score -= qr4.objects.filter(qes_id = id).first().deduct
+            obj.save()
+
+        id += 1
+        team += 1
+        print(res)
+    quest = qr4.objects.filter(qes_id = id).first()
+    tea_m = tm.objects.filter(t_id = team).first()
+    return render(request, "r4_quest.html", {
+        "q":id,
+        "t":team,
+        "team":tea_m,
+        "quest":quest,
+        "teams": list(tm.objects.filter(spec=False).order_by('score'))[::-1],
+        "yt":yt,
+        "ph":ph,
+        })
+
+def r4_elemator(request):
+    elemeted_team = list(tm.objects.filter(spec=False).order_by('score'))[::-1][-2]
+    if not dg.objects.filter(teams = elemeted_team).exists():
+        obj = dg.objects.create(teams = elemeted_team)
+        obj.save()
+    print(elemeted_team)
+    return render(request, "r4_ele.html", {"team":elemeted_team})
+
 def r3_elemator(request):
     elemeted_team = list(tm.objects.filter(spec=False).order_by('score'))[::-1][-1]
     if not dg.objects.filter(teams = elemeted_team).exists():
@@ -36,12 +85,9 @@ def r3_elemator(request):
     print(elemeted_team)
     return render(request, "r3_ele.html", {"team":elemeted_team})
 
-def r3(request):
-    rounds = rd.objects.filter(round="round3").first()
-    print(type(rounds.rules))
-    return render(request, "r3.html", {"rounds": rounds.rules})
-
 def r3_quest_lrbd(request, id):
+    if id >= 9:
+        return redirect("/r4_ele")
     if request.method == "POST":
         pro_lst = request.POST.get("pro_lst")
         pro_lst = list(json.loads(pro_lst))
@@ -57,8 +103,8 @@ def r3_quest_lrbd(request, id):
                 team.score += 50 - i
                 team.save()
                 i += 10
-        else:
-            for lst in dep_lst:
+        if len(dep_lst)!=0:
+            for lst in dep_lst: 
                 print(lst)
                 team = tm.objects.filter(team_name=lst["team"]).first()
                 team.score -= 20

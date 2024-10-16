@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Round 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    {% load static %}
+    <style>
+        body {
+            background-image: url("{% static 'img/r2_bg.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        /* Styling for highlighted option */
+        .selected {
+            background-color: #7db9e8 !important;
+            box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.5);
+            border: 2px solid #0000ff;
+        }
+
+        /* Increase the feedback text size */
+        .feedback {
+            font-size: 2rem;  /* Larger feedback text */
+            color: #fff;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .ans {
+            font-size: 2rem;  /* Larger feedback text */
+            color: #fff;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+
+        .feedback.right {
+            color: green;
+        }
+
+        .feedback.wrong {
+            color: red;
+        }
+
+        /* Other CSS */
+    </style>
+    <link rel="stylesheet" href="{% static 'css/r4_quest.css' %}">
+</head>
+<body>
+
+    <h1 id="heading">Audio Visual</h1>
+    
+
+    <div class="leader-board">
+        <h2>LEADER BOARD</h2>
+        {% for team in teams %}
+            <div class="team-score">
+                <span class="team-name">{{ team }}</span>
+                <span class="team-score">{{ team.score }}</span>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="team-container">
+        <div class="team">
+            <h1>{{ team.team_name}}</h1>
+        </div>
+    </div>
+
+    <div class="quiz-container">
+        <form id="quizForm" action="/r4_quest/{{ q }}/{{ t }}" method="post">
+            {% csrf_token %}
+            <div class="question-text">
+                <h2>{{ quest.quest }}</h2>
+            </div>
+
+            {% if ph %}
+    <!-- Image -->
+    <div class="flex justify-center" id="mediaContainer">
+        <img src="{{ quest.media_url }}" alt="image" class="w-3/4 h-auto md:w-2/3 lg:w-1/2" id="media">
+    </div>
+{% else %}
+    <!-- Video -->
+    <div class="flex justify-center" id="mediaContainer">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/hgIyG6EXEC8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    </div>
+{% endif %}
+
+             
+            
+            <input type="hidden" id="inp" name="inp" value="">
+        </form>
+    </div>
+
+    <div class="status-bar">
+        <div class="question-counter">Question {{ q }} of 8</div>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+
+    <div class="timer-container">
+        <div class="timer">15</div>
+        <div class="timer-bar" id="timer-bar"></div>
+    </div>
+
+    <!-- Feedback message will be displayed here -->
+    <div id="feedback" class="feedback"></div>
+    <div id="ans" class="ans"></div>
+
+    <script>
+        // Initialize variables
+        let timerRunning = false;
+        let remainingTime = 15;  // Set the total duration of the timer in seconds
+        let timerInterval;  // To hold the interval for the timer
+
+        // Event listener for 'Y', 'N', and Enter keys for form submission
+        document.addEventListener('keydown', function(event) {
+            const inp = document.getElementById('inp');
+            const feedback = document.getElementById('feedback');
+            const ans = document.getElementById('ans');
+            const mediaContainer = document.getElementById('mediaContainer');
+            const media = document.getElementById('media');
+
+            // Handle 'Y' and 'N' keys for right/wrong answer
+            if (event.key.toLowerCase() === 'y') {
+                inp.value = '1';  // Set value to 1 if 'Y' is pressed
+                feedback.innerHTML = 'right';  // Update feedback message
+                feedback.classList.add('right');
+                feedback.classList.remove('wrong');
+                ans.innerHTML = '{{ quest.ans }}';
+            } else if (event.key.toLowerCase() === 'n') {
+                inp.value = '0';  // Set value to 0 if 'N' is pressed
+                feedback.innerHTML = 'wrong';  // Update feedback message
+                feedback.classList.add('wrong');
+                feedback.classList.remove('right');
+                ans.innerHTML = '{{ quest.ans }}';
+                
+                // Hide the media content when the answer is wrong
+                if (media) {
+                    media.style.display = 'none';
+                }
+            }
+
+            // Handle Enter key to submit the form if 'Y' or 'N' has been pressed
+            if (event.key === 'Enter' && (inp.value === '1' || inp.value === '0')) {
+                event.preventDefault();  // Prevent default form submission
+
+                // Delay form submission by 2 seconds to show the feedback
+                setTimeout(function() {
+                    document.getElementById('quizForm').submit();  // Submit the form
+                }, 2000);  // 2-second delay
+            }
+        });
+
+        // Event listener for the space bar to start or pause the timer
+        document.addEventListener('keydown', function (event) {
+            // Spacebar toggles timer
+            if (event.key === ' ') {
+                event.preventDefault();
+                if (!timerRunning) {
+                    startTimer();
+                } else {
+                    pauseTimer();  // Toggle to pause
+                }
+            }
+        });
+
+        // Timer functionality
+        function startTimer() {
+            timerRunning = true;
+            const timerBar = document.getElementById('timer-bar');
+            const totalDuration = remainingTime;  // Save the initial time for progress calculations
+
+            // Update the timer every second
+            timerInterval = setInterval(() => {
+                remainingTime--;
+                updateTimerDisplay();
+
+                // Calculate the new width of the timer bar based on remaining time
+                const barWidthPercent = (remainingTime / totalDuration);  // Convert to percentage
+                if (timerBar) {
+                    timerBar.style.transform = `scaleX(${barWidthPercent})`;  // Scale the timer bar
+                }
+
+                // If the timer reaches zero, stop the timer
+                if (remainingTime <= 0) {
+                    clearInterval(timerInterval);
+                    timerRunning = false;
+                    // Handle timer expiration action here, e.g., auto-submit the form
+                    document.getElementById('quizForm').submit();  // Auto-submit the form
+                }
+            }, 1000);  // 1000ms = 1 second
+        }
+
+        // Function to pause the timer
+        function pauseTimer() {
+            clearInterval(timerInterval);  // Stop the timer
+            timerRunning = false;
+        }
+
+        // Function to update the timer display on the page
+        function updateTimerDisplay() {
+            const timerDisplay = document.querySelector('.timer');
+            if (timerDisplay) {
+                timerDisplay.textContent = remainingTime;  // Update the timer text
+            }
+        }
+
+        // Progress bar logic
+        const progressBar = document.getElementById('progress');
+        const totalQuestions = 12;  // Adjust based on total number of questions
+        const currentQuestion = parseInt('{{ q }}', 10);  // Replace with the actual question counter
+
+        // Update the progress bar width based on the current question
+        if (totalQuestions > 0 && currentQuestion > 0) {
+            const progressPercent = (currentQuestion / totalQuestions) * 100;
+            if (progressPercent <= 100 && progressPercent >= 0) {
+                progressBar.style.width = progressPercent + '%';
+            }
+        }
+    </script>   
+</body>
+</html>

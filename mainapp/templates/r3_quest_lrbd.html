@@ -18,10 +18,23 @@
             min-height: 100vh;
         }
 
+        #messages {
+        max-height: 300px; /* Set a reasonable height for the message box */
+        overflow-y: auto;  /* Scrollbar only if necessary */
+        transition: max-height 0.3s ease;
+    }
+
+    /* When the timer is over, remove the scroll */
+    #messages.no-scroll {
+        max-height: none;   /* Remove the height limit */
+        overflow-y: hidden; /* Disable scrolling */
+    }
+
     </style>
     <link rel="stylesheet" type="text/css" href="{% static 'css/r3_quest.css' %}">
 </head>
 <body>
+    <h1 id="heading">Buzzer Round</h1>
     <div class="leader-board">
         <h2>LEADER BOARD</h2>
         {% for team in teams %}
@@ -109,19 +122,44 @@
         }
 
         function startTimer() {
-            if (!isRunning) {
-                timerInterval = setInterval(() => {
-                    if (timeRemaining > 0) {
-                        timeRemaining -= 10;
-                        updateTimerDisplay();
-                    } else {
-                        clearInterval(timerInterval);
-                        isRunning = false;
-                    }
-                }, 10);
-                isRunning = true;
+    if (!isRunning) {
+        timerInterval = setInterval(() => {
+            if (timeRemaining > 0) {
+                timeRemaining -= 10;
+                updateTimerDisplay();
+            } else {
+                clearInterval(timerInterval);
+                isRunning = false;
+                showTimerOverMessage();  // Call the function to show message when timer is over
+                removeOptionsAndQuestion();  // Call the function to remove options and question
             }
-        }
+        }, 10);
+        isRunning = true;
+    }
+}
+
+function showTimerOverMessage() {
+    let messages = document.getElementById('messages');
+
+    // Add the no-scroll class when the timer is over
+    messages.classList.add('no-scroll');
+
+    let messageHTML = `
+        <div class="message-box">
+            <h3 class="team-name">Time's Up!</h3>
+            <p class="reaction-time">You ran out of time!</p>
+        </div>
+    `;
+    messages.insertAdjacentHTML('beforeend', messageHTML);
+}
+
+
+function removeOptionsAndQuestion() {
+    // Remove the question text and option containers
+    document.querySelector('.question-text').style.display = 'none';
+    document.querySelector('.option-container').style.display = 'none';
+}
+
 
         function pauseTimer() {
             clearInterval(timerInterval);
@@ -163,20 +201,76 @@
 
         });
 
-        chatSocket.onmessage = function(e) {
-            let data = JSON.parse(e.data);
-            let messages = document.getElementById('messages');
-            if (data.team !== undefined) {
-                let tm = data.time;
-                if(data.score>=0){
-                    pro_lst.push({"team":data.team, "time":tm})
-                }
-                else{
-                    dep_lst.push({"team":data.team})
-                }
-                messages.insertAdjacentHTML('beforeend', `<div><p>${data.team} ${(10.0 - tm).toFixed(3)}  ${data.score}</p></div>`);
+        let i = 0; // Initial decrement counter
+
+    chatSocket.onmessage = function(e) {
+        let data = JSON.parse(e.data);
+        let messages = document.getElementById('messages');
+        
+        if (data.team !== undefined) {
+            let tm = data.time;
+            let reactionTime = (10.0 - tm).toFixed(3);
+            
+            // Calculate the score dynamically: start with 50 and decrease by i if score is positive
+            let displayedScore = (data.score >= 0) ? 50 - i : data.score;
+            
+            if (data.score >= 0) {
+                // Increase the counter for the next player
+                i += 10;
+                pro_lst.push({"team": data.team, "time": tm});
+            } else {
+                dep_lst.push({"team": data.team});
             }
-        };
+
+            // Create the HTML for a creative message display with conditional styling
+            let messageHTML = `
+                <div class="message-box">
+                    <h3 class="team-name">${data.team}</h3>
+                    <p class="reaction-time">Reaction Time: <strong>${reactionTime} seconds</strong></p>
+                    <p class="team-score">
+                        Score: <strong style="color: ${displayedScore >= 0 ? '#00FF00' : '#FF4500'};">${displayedScore}</strong>
+                    </p>
+                </div>
+            `;
+
+            messages.insertAdjacentHTML('beforeend', messageHTML);
+        }
+    };
+
+    // Styling for the messages
+    const styleElement = document.createElement('style');
+    styleElement.textContent = `
+        .message-box {
+            border: 2px solid #4CAF50;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #FFF;
+            margin: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+            animation: fadeIn 0.5s ease;
+        }
+        .team-name {
+            font-size: 1.5em;
+            margin: 0;
+            color: #FFD700;
+        }
+        .reaction-time {
+            font-size: 1.2em;
+            margin: 0;
+            color: #00FF00;
+        }
+        .team-score {
+            font-size: 1.2em;
+            margin: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    `;
+    document.head.appendChild(styleElement);
 
         window.onload = function() {
             updateTimerDisplay();

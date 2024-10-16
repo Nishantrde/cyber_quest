@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kasual Round</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/r1.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1 id="heading">📢👁️(Audio Visual)</h1>
+        <div id="line1"></div>
+
+        <!-- Wrapper for image and rules side by side -->
+        <div class="content-wrapper">
+            <video id="kasual" autoplay muted loop>
+                <source src="https://res.cloudinary.com/dwfdyavop/video/upload/v1728830885/bandicam_2024-10-13_07-46-04-903_wwsapj.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div id="rules">
+                <h2>Rules</h2>
+                <ul id="rules-list">
+                    {% for rule in rounds %}
+                        <li>{{ rule }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        
+        <div id="line"></div>
+    </div>
+    
+
+    <script>
+        // Function to listen for the spacebar key press
+        document.addEventListener('keydown', function(event) {
+            if (event.code === 'Enter') {
+                // Select the heading, image, and lines
+                var heading = document.getElementById('heading');
+                var image = document.getElementById('kasual');
+                var line1 = document.getElementById('line1');
+                var line = document.getElementById('line');
+                
+                // Add fade-out class to all elements
+                heading.classList.add('fade-out');
+                image.classList.add('fade-out');
+                line1.classList.add('fade-out');
+                line.classList.add('fade-out');
+
+                // Wait for 1 second (1000ms) before redirecting
+                setTimeout(function() {
+                    window.location.href = '/r4_quest';  // Redirect to the desired URL
+                }, 1000);  // 1 second delay matches the fade-out effect
+            }
+        });
+    </script>
+</body>
+</html>
