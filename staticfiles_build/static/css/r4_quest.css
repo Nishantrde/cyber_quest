@@ -98,11 +98,11 @@ h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.496); /* Slightly transparent background */
+    background-color: rgba(0, 0, 0, 0.679); /* Slightly transparent background */
     padding: 10px 15px;
     border-radius: 10px;
     z-index: 200; /* Ensures the status bar is above other elements */
-    box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+    box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.894); /* Shadow for depth */
 }
 
 .question-counter {
@@ -116,7 +116,7 @@ h1 {
     top: 110px; /* Increased distance from the top of the viewport for more gap */
     left: 20px; /* Aligns with the status bar */
     height: 10px; /* Increased height for a thicker progress bar */
-    background-color: #38383886;
+    background-color: #3838389f;
     border-radius: 8px;
     overflow: hidden;
     width: 300px; /* Increased width for a larger progress bar */
@@ -186,29 +186,93 @@ h1 {
     font-weight: 500;
 }
 
-/* Option Button Styles */
-.option-button {
-    background-color: #ff3b3f;
-    border: none;
-    color: white;
-    padding: 15px;
-    text-align: center;
-    display: block;
-    font-size: 18px;
-    margin: 10px 0;
-    cursor: pointer;
-    width: 100%;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+/* Center the video container */
+.video-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
+    margin: 20px 0;
 }
 
-.option-button:hover {
-    background-color: #ff3b3f;
+/* Add curved edges to the video */
+.curved-video {
+    border-radius: 20px; /* Adjust for more or less curve */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4); /* Optional: add shadow for depth */
+    width: 100%;
+    max-width: 700px; /* Ensure the video does not exceed this width */
+    height: auto; /* Maintain the aspect ratio */
 }
+
+
+/* Base styles for the table */
+.styled-options-table {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    border-spacing: 20px;
+  }
+  
+/* Base styles for the table */
+.styled-options-table {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    border-spacing: 20px;
+}
+
+/* Styles for the label (A, B, C, D) */
+.option-label {
+    display: inline-block;
+    color: white;
+    padding: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: #007BFF;
+    clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%); /* Trapezoid shape */
+    margin-right: 15px;
+}
+
+/* Individual label colors */
+.option-a { background-color: #007BFF; } /* Blue */
+.option-b { background-color: #00D4A3; } /* Teal */
+.option-c { background-color: #FF3B3F; } /* Red */
+.option-d { background-color: #FF851B; } /* Orange */
+
+.option-box {
+    display: flex;
+    align-items: center;
+    background-color: #424040be;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s;
+    width: 396px; /* Ensure each option box takes up full width */
+    max-width: 800px; /* Limit maximum width to prevent excessive expansion */
+    margin-bottom: 20px; /* Add margin for spacing between options */
+    min-height: 100px; /* Ensure a minimum height */
+    height: 124px; /* Set a fixed height for all option boxes */
+    flex-grow: 1; /* Ensure it expands to fit the content */
+}
+
+/* Ensure all option boxes have the same height */
+.option-text {
+    flex: 1;
+    font-size: 25px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    color: #fcfcfc;
+    overflow-wrap: break-word; /* Wrap long text */
+    text-align: left; /* Align text to the left for better readability */
+    min-height: 100px; /* Ensure consistent height regardless of content */
+}
+
+
 
 /* Response Message Styles */
 .response-message {
-    font-size: 40px;
+    font-size: 22px;
     font-weight: 700;
     color: #ff3b3f;
     margin-top: 20px;
@@ -243,6 +307,22 @@ h1 {
     transform: scaleX(1); /* Initially full width */
     transition: transform 0.5s linear; /* Smooth shrinking effect */
 }
+
+.aspect-ratio-box {
+    position: relative;
+    width: 100%;  /* Width is relative to the parent container */
+    padding-top: 56.25%;  /* This is for a 16:9 aspect ratio, change to suit your needs */
+}
+
+.aspect-ratio-box img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 
 
 
