@@ -35,6 +35,7 @@
 </head>
 <body>
     <h1 id="heading">Buzzer Round</h1>
+    <div id="answer"></div>
     <div class="leader-board">
         <h2>LEADER BOARD</h2>
         {% for team in teams %}
@@ -140,17 +141,16 @@
 
 function showTimerOverMessage() {
     let messages = document.getElementById('messages');
+    let answer = document.getElementById('answer');
 
     // Add the no-scroll class when the timer is over
     messages.classList.add('no-scroll');
 
     let messageHTML = `
-        <div class="message-box">
-            <h3 class="team-name">Time's Up!</h3>
-            <p class="reaction-time">You ran out of time!</p>
-        </div>
+    <h1 id="heading">{{quest}}</h1>
+        <h1 id="heading">Answer: {{ans}}</h1>
     `;
-    messages.insertAdjacentHTML('beforeend', messageHTML);
+    answer.insertAdjacentHTML('beforeend', messageHTML);
 }
 
 

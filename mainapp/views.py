@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 import json
 from .models import Quest_round1 as qr
 from .models import Quest_round2 as qr2
@@ -7,6 +7,13 @@ from .models import Quest_round4 as qr4
 from .models import Rounds as rd
 from .models import Tea_m as tm
 from .models import Dugout as dg
+
+def t_t(request):
+    for i in range(1,8):
+        obj = tm.objects.filter(t_id = i).first()
+        obj.score = 0
+        obj.save()
+    return HttpResponse("Done")
 
 def index(request):
     return render(request, "index.html")
@@ -86,8 +93,9 @@ def r3_elemator(request):
     return render(request, "r3_ele.html", {"team":elemeted_team})
 
 def r3_quest_lrbd(request, id):
+    ans = ""
     if id >= 9:
-        return redirect("/r4_ele")
+        return redirect("/graph/r4_ele")
     if request.method == "POST":
         pro_lst = request.POST.get("pro_lst")
         pro_lst = list(json.loads(pro_lst))
@@ -112,7 +120,11 @@ def r3_quest_lrbd(request, id):
         
     quest = qr3.objects.filter(qes_id = id).first()
     teams = list(tm.objects.filter(spec=False).order_by('score'))[::-1]
-    return render(request, "r3_quest_lrbd.html", {"teams":teams,"quest":quest, "count":id+1, "counter":id})
+    if quest.ans == 1: ans = quest.option1
+    if quest.ans == 2: ans = quest.option2
+    if quest.ans == 3: ans = quest.option3
+    if quest.ans == 4: ans = quest.option4
+    return render(request, "r3_quest_lrbd.html", {"teams":teams,"quest":quest, "ans":ans, "count":id+1, "counter":id})
 
 def r3_quest(request, team):
     tea_m = tm.objects.filter(t_id = team).first()
