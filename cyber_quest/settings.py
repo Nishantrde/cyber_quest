@@ -93,12 +93,21 @@ CHANNEL_LAYERS = {
     },
 }
 
-# Database configuration
+
 DATABASES = {
-    'default': dj_database_url.parse(
-        "postgresql://cyber_quest_user:LbzjLZ3LHAI4x3QwRDmSaPZcJAgk80f7@dpg-cs13usu8ii6s73cv6dq0-a.singapore-postgres.render.com/cyber_quest"
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+
+
+# Database configuration
+# DATABASES = {
+#     'default': dj_database_url.parse(
+#         "postgresql://cyber_quest_user:LbzjLZ3LHAI4x3QwRDmSaPZcJAgk80f7@dpg-cs13usu8ii6s73cv6dq0-a.singapore-postgres.render.com/cyber_quest"
+#     )
+# }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [

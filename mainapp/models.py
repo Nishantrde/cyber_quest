@@ -5,6 +5,7 @@ class Tea_m(models.Model):
     team_name = models.CharField(default = "",max_length=250)
     score = models.IntegerField(default=0)
     spec = models.BooleanField(default=False)
+    dug_out = models.BooleanField(default=False)
     
 
     def __str__(self):

@@ -8,7 +8,7 @@
     {% load static %}
     <style>
         body {
-            background-image: url("{% static 'img/r2_bg.jpg' %}");
+            background-image: url("https://img.freepik.com/free-vector/black-red-futuristic-gaming-background_331749-871.jpg?t=st=1729393634~exp=1729397234~hmac=90cdfedb99f6d03d2f09cb9f0abc9e13d27b135b3b3704072e0f6d9229da100b&w=1380");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -55,7 +55,7 @@
 </head>
 <body>
 
-    <h1 id="heading">Audio Visual</h1>
+    <!-- <h1 id="heading">Audio Visual</h1> -->
     
 
     <div class="leader-board">
@@ -89,13 +89,10 @@
 {% else %}
     <!-- Video -->
     <div class="flex justify-center" id="mediaContainer">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/hgIyG6EXEC8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe width="560" height="315" src="{{ quest.media_url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
     </div>
 {% endif %}
-
-             
-            
             <input type="hidden" id="inp" name="inp" value="">
         </form>
     </div>
@@ -109,7 +106,7 @@
     </div>
 
     <div class="timer-container">
-        <div class="timer">15</div>
+        <div class="timer">30</div>
         <div class="timer-bar" id="timer-bar"></div>
     </div>
 
@@ -120,7 +117,7 @@
     <script>
         // Initialize variables
         let timerRunning = false;
-        let remainingTime = 15;  // Set the total duration of the timer in seconds
+        let remainingTime = 30;  // Set the total duration of the timer in seconds
         let timerInterval;  // To hold the interval for the timer
 
         // Event listener for 'Y', 'N', and Enter keys for form submission
@@ -128,8 +125,8 @@
             const inp = document.getElementById('inp');
             const feedback = document.getElementById('feedback');
             const ans = document.getElementById('ans');
-            const mediaContainer = document.getElementById('mediaContainer');
-            const media = document.getElementById('media');
+            // const mediaContainer = document.getElementById('mediaContainer');
+            // const media = document.getElementById('media');
 
             // Handle 'Y' and 'N' keys for right/wrong answer
             if (event.key.toLowerCase() === 'y') {
@@ -145,10 +142,7 @@
                 feedback.classList.remove('right');
                 ans.innerHTML = '{{ quest.ans }}';
                 
-                // Hide the media content when the answer is wrong
-                if (media) {
-                    media.style.display = 'none';
-                }
+                
             }
 
             // Handle Enter key to submit the form if 'Y' or 'N' has been pressed
@@ -218,7 +212,7 @@
 
         // Progress bar logic
         const progressBar = document.getElementById('progress');
-        const totalQuestions = 12;  // Adjust based on total number of questions
+        const totalQuestions = 8;  // Adjust based on total number of questions
         const currentQuestion = parseInt('{{ q }}', 10);  // Replace with the actual question counter
 
         // Update the progress bar width based on the current question

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1-Minute Countdown Clock</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/r5_quest.css' %}">
+  <link rel="stylesheet" href="{% static 'css/r4_quest.css' %}">
+
+  <style>
+    
+  </style>
+</head>
+<body>
+    <h1 class="rapid-fire">Rapid 🔥!</h1>
+    <h2>{{team}}</h1>
+    <div class="timer-container">
+      <div class="clock">
+        <svg>
+          <circle cx="50%" cy="50%" r="70"></circle> <!-- Reduce radius -->
+          <circle cx="50%" cy="50%" r="70" id="progress-circle"></circle>
+        </svg>
+        <div id="timer">01:00</div>
+      </div>
+    </div>
+    <div class="leader-board">
+        <h2>LEADER BOARD</h2>
+        {% for team in teams %}
+            <div class="team-score">
+                <span class="team-name">{{ team }}</span>
+                <span class="team-score">{{ team.score }}</span>
+            </div>
+        {% endfor %}
+    </div>
+
+  <script>
+    let timeLeft = 60;
+    let totalTime = 60;  // Total duration of the countdown
+    let timerDisplay = document.getElementById('timer');
+    let progressCircle = document.getElementById('progress-circle');
+    let timerInterval;
+    let timerStarted = false;
+
+    function startTimer() {
+      if (timerStarted) return;
+      timerStarted = true;
+      timerInterval = setInterval(() => {
+        if (timeLeft > 0) {
+          timeLeft--;
+          let minutes = Math.floor(timeLeft / 60);
+          let seconds = timeLeft % 60;
+          seconds = seconds < 10 ? '0' + seconds : seconds;
+          timerDisplay.textContent = `${minutes}:${seconds}`;
+
+          // Calculate the stroke-dashoffset based on the remaining time
+          let progress = (timeLeft / totalTime) * 471;
+          progressCircle.style.strokeDashoffset = progress;
+          
+        } else {
+          clearInterval(timerInterval);
+          timerDisplay.textContent = "Time's up!";
+        }
+      }, 1000);
+    }
+    function redirectToQuest() {
+      // Redirects the user to /r5_quest/{team_id}
+      id = parseInt(`{{team_id}}`)+1
+      window.location.href = `/r5_quest/${id}`;
+    }
+    document.addEventListener('keydown', (event) => {
+      if (event.code === 'Space') {
+        startTimer();
+      }
+      if (event.code === 'Enter') {
+        redirectToQuest();
+      }
+    });
+  </script>
+</body>
+</html>

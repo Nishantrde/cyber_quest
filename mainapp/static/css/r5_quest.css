@@ -1,0 +1,132 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center both vertically and horizontally */
+    align-items: center;
+    height: 100vh;
+    background-color: #0d0d0d;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+  }
+
+  h1.rapid-fire {
+    font-size: 50px;
+    color: #ff4b2b;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .timer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    max-height: 400px; /* Set a maximum height */
+  }
+
+  .clock {
+    position: relative;
+    width: 150px; /* Reduce the clock size */
+    height: 150px;
+    margin: 0 auto;
+  }
+
+  svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+
+  circle {
+    fill: none;
+    stroke-width: 8; /* Adjust stroke width to match reduced size */
+    stroke: #3b3b3b;
+    stroke-dasharray: 471; /* Adjust stroke-dasharray to fit smaller circle */
+    stroke-dashoffset: 0;
+  }
+
+  #progress-circle {
+    stroke: #ff4b2b;
+    stroke-dashoffset: 471;
+    transition: stroke-dashoffset 1s linear;
+  }
+
+  #timer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 28px; /* Reduce font size for smaller clock */
+    color: #ff4b2b;
+  }
+
+  .rapid-fire-container {
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  /* Leaderboard Styling */
+.leader-board {
+    position: fixed;
+    top: 80px; /* Adjusted to move below the navbar */
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.5);
+    color: #FFFFFF;
+    width: 300px; /* Set a fixed width */
+    z-index: 100;
+}
+
+.leader-board h2 {
+    margin: 0 0 15px 0;
+    font-size: 30px;
+    color: #FFD700;
+    text-align: center;
+    text-shadow: 0px 0px 10px #FFD700;
+    border-bottom: 2px solid #FFD700; /* Bottom border for separation */
+    padding-bottom: 10px;
+}
+
+.team-score {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Set the width to match the leaderboard */
+    margin: 2px 0;
+    padding: 10px;
+    color: #FFFFFF;
+    font-size: 27px;
+    background: linear-gradient(45deg, #ff3b3f, #0f0f0f57);
+    border-radius: 8px;
+    transition: transform 0.3s ease, background 0.3s ease;
+    cursor: pointer; /* Change cursor to indicate interactivity */
+}
+
+.team-score:hover {
+    transform: scale(1.05);
+    background: linear-gradient(45deg, #ff6347, #1c1c1c); /* Slightly brighter gradient on hover */
+}
+
+.team-name {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.team-score span {
+    font-weight: 500;
+}
+

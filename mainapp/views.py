@@ -46,49 +46,77 @@ def r4(request):
     print(type(rounds.rules))
     return render(request, "r4.html", {"rounds": rounds.rules})
 
+def r5(request):
+    rounds = rd.objects.filter(round="round5").first() 
+    print(type(rounds.rules))
+    return render(request, "r5.html", {"rounds": rounds.rules})
+
+def r5_quest(request, team):
+    return render(request, "r5_quest.html", {
+        "teams":list(tm.objects.filter(spec=False, dug_out=False).order_by('score'))[::-1],
+        "team":tm.objects.filter(dug_out = False, spec = False).order_by("t_id")[team-1],
+        "team_id":team,
+    }
+        )
+
 def r4_quest(request, id, team):
-    ph = True if id <=4 else False
+    if id >= 8:
+        return redirect("/graph/r5_ele")
+    ph = True if id<=4 else False
     yt = True if not ph else False
-    print(ph, yt)
+    
     if request.method == "POST":
         res = int(request.POST.get("inp"))
         if res == 1:
-            obj = tm.objects.filter(t_id = team).first()
+            obj = tm.objects.filter(dug_out = False, spec = False).order_by("t_id")[team-1]
+            print(obj)
             obj.score += qr4.objects.filter(qes_id = id).first().score
             obj.save()
         else:
-            obj = tm.objects.filter(t_id = team).first()
+            obj = tm.objects.filter(dug_out = False, spec = False).order_by("t_id")[team-1]
             obj.score -= qr4.objects.filter(qes_id = id).first().deduct
             obj.save()
 
         id += 1
         team += 1
-        print(res)
     quest = qr4.objects.filter(qes_id = id).first()
-    tea_m = tm.objects.filter(t_id = team).first()
+    team =  1 if team > 4 else team
+    tea_m = tm.objects.filter(dug_out = False, spec = False).order_by("t_id")[team-1]
     return render(request, "r4_quest.html", {
         "q":id,
         "t":team,
         "team":tea_m,
         "quest":quest,
-        "teams": list(tm.objects.filter(spec=False).order_by('score'))[::-1],
+        "teams": list(tm.objects.filter(spec=False, dug_out=False).order_by('score'))[::-1],
         "yt":yt,
         "ph":ph,
         })
 
+def r5_elemator(request):
+    elemeted_team = list(tm.objects.filter(spec=False, dug_out=False).order_by('score'))[::-1][-1]
+    ob = tm.objects.filter(team_name = elemeted_team).first()
+    ob.dug_out = True
+    ob.save()
+        
+    print(elemeted_team)
+    return render(request, "r5_ele.html", {"team":elemeted_team})
+
+
 def r4_elemator(request):
-    elemeted_team = list(tm.objects.filter(spec=False).order_by('score'))[::-1][-2]
-    if not dg.objects.filter(teams = elemeted_team).exists():
-        obj = dg.objects.create(teams = elemeted_team)
-        obj.save()
+    elemeted_team = list(tm.objects.filter(spec=False, dug_out=False).order_by('score'))[::-1][-1]
+    ob = tm.objects.filter(team_name = elemeted_team).first()
+    ob.dug_out = True
+    ob.save()
+        
     print(elemeted_team)
     return render(request, "r4_ele.html", {"team":elemeted_team})
 
 def r3_elemator(request):
     elemeted_team = list(tm.objects.filter(spec=False).order_by('score'))[::-1][-1]
-    if not dg.objects.filter(teams = elemeted_team).exists():
-        obj = dg.objects.create(teams = elemeted_team)
-        obj.save()
+    ob = tm.objects.filter(team_name = elemeted_team).first()
+    ob.dug_out = True
+    ob.save()
+        
     print(elemeted_team)
     return render(request, "r3_ele.html", {"team":elemeted_team})
 
@@ -119,7 +147,7 @@ def r3_quest_lrbd(request, id):
                 team.save()
         
     quest = qr3.objects.filter(qes_id = id).first()
-    teams = list(tm.objects.filter(spec=False).order_by('score'))[::-1]
+    teams = list(tm.objects.filter(spec=False, dug_out=False).order_by('score'))[::-1]
     if quest.ans == 1: ans = quest.option1
     if quest.ans == 2: ans = quest.option2
     if quest.ans == 3: ans = quest.option3
