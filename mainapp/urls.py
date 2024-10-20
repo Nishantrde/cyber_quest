@@ -11,6 +11,7 @@ urlpatterns = [
     path("r3", r3),
     path("r4", r4),
     path("r5", r5),
+    path("test/<int:id>/<int:team>/<str:con>", r1_test_quest),
     path("r3_ele", r3_elemator),
     path("r4_ele", r4_elemator),
     path("r5_ele", r5_elemator),

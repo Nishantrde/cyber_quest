@@ -383,6 +383,13 @@ def r1_quest(request):
         "spec": False if team != "spectators" else True
     })
 
+
+def r1_test_quest(request, id, team, con):
+
+    return render(request, "r1_test_quest.html",{
+        "teams": list(tm.objects.filter(spec=False).order_by('score'))[::-1],
+    })
+
 def ws(request):
     return render(request, "ws.html")
 
