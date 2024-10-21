@@ -385,8 +385,24 @@ def r1_quest(request):
 
 
 def r1_test_quest(request, id, team, con):
+    t = team
+    inp = request.POST.get("inp")
+    pas = request.POST.get("pas")
 
+    if inp == 'p':
+        if pas == pas:
+            team = ""
+        team += 1
+        t = team
+
+    if con == 'g':
+        quest = qr.objects.filter(qes_id = id).first()
+        team = tm.objects.filter(t_id = team).first()
     return render(request, "r1_test_quest.html",{
+        "quest":quest,
+        "team":team,
+        "q":id,
+        "t":t,
         "teams": list(tm.objects.filter(spec=False).order_by('score'))[::-1],
     })
 

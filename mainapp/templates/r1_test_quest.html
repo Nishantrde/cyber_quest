@@ -8,7 +8,7 @@
     {% load static %}
     <style>
         body {
-            background-image: url("https://img.freepik.com/free-vector/black-red-futuristic-gaming-background_331749-871.jpg?t=st=1729393634~exp=1729397234~hmac=90cdfedb99f6d03d2f09cb9f0abc9e13d27b135b3b3704072e0f6d9229da100b&w=1380");
+            background-image: url("{% static 'img/r1_bg.jpg' %}");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -51,7 +51,7 @@
 
         /* Other CSS */
     </style>
-    <link rel="stylesheet" href="{% static 'css/r4_quest.css' %}">
+    <link rel="stylesheet" href="{% static 'css/test.css' %}">
 </head>
 <body>
 
@@ -74,30 +74,21 @@
     </div>
 
     <div class="quiz-container">
-        <form id="quizForm" action="/r4_quest/{{ q }}/{{ t }}" method="post">
+        <form id="quizForm" action="/test/{{ q }}/{{ t }}/g" method="post">
             {% csrf_token %}
             <div class="question-text">
                 <h2>{{ quest.quest }}</h2>
             </div>
 
-            {% if ph %}
-    <!-- Image -->
-    <div class="flex justify-center" id="mediaContainer">
-        <img src="{{ quest.media_url }}" alt="image" class="w-3/4 h-auto md:w-2/3 lg:w-1/2" id="media">
-    </div>
-{% else %}
-    <!-- Video -->
-    <div class="flex justify-center" id="mediaContainer">
-        <iframe width="560" height="315" src="{{ quest.media_url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-    </div>
-{% endif %}
             <input type="hidden" id="inp" name="inp" value="">
         </form>
+        <div id="feedback" class="feedback"></div>
+    <div id="ans" class="ans"></div>
+
     </div>
 
     <div class="status-bar">
-        <div class="question-counter">Question {{ q }} of 8</div>
+        <div class="question-counter">Question {{ q }} of 12</div>
     </div>
 
     <div class="progress-bar">
@@ -133,19 +124,29 @@
                 feedback.innerHTML = 'right';  // Update feedback message
                 feedback.classList.add('right');
                 feedback.classList.remove('wrong');
+                //ans.innerHTML = '{{ quest.ans }}';
+            }
+            
+            else if (event.key.toLowerCase() === 'a') {
+                
                 ans.innerHTML = '{{ quest.ans }}';
-            } else if (event.key.toLowerCase() === 'n') {
+            }
+            else if (event.key.toLowerCase() === 'p') {
+                inp.value = 'p';  // Set value to 0 if 'N' is pressed
+                ans.innerHTML = 'PASS';
+                
+            }
+            else if (event.key.toLowerCase() === 'n') {
                 inp.value = '0';  // Set value to 0 if 'N' is pressed
                 feedback.innerHTML = 'wrong';  // Update feedback message
                 feedback.classList.add('wrong');
                 feedback.classList.remove('right');
-                ans.innerHTML = '{{ quest.ans }}';
-                
+                // ans.innerHTML = '{{ quest.ans }}';
                 
             }
 
             // Handle Enter key to submit the form if 'Y' or 'N' has been pressed
-            if (event.key === 'Enter' && (inp.value === '1' || inp.value === '0')) {
+            if (event.key === 'Enter') {
                 event.preventDefault();  // Prevent default form submission
 
                 // Delay form submission by 2 seconds to show the feedback
@@ -211,7 +212,7 @@
 
         // Progress bar logic
         const progressBar = document.getElementById('progress');
-        const totalQuestions = 8;  // Adjust based on total number of questions
+        const totalQuestions = 12;  // Adjust based on total number of questions
         const currentQuestion = parseInt('{{ q }}', 10);  // Replace with the actual question counter
 
         // Update the progress bar width based on the current question
